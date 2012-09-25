@@ -1,0 +1,10 @@
+#!/usr/bin/php
+<?php
+
+require "lib/Ingesta/Utils.php";
+\Ingesta\Utils::registerAutoloader();
+
+$ingesta = new \Ingesta\Ingesta();
+$ingesta->run($argv);
+
+?>
