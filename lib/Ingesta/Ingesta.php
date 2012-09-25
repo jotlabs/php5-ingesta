@@ -2,9 +2,10 @@
 namespace Ingesta;
 
 class Ingesta {
+    const VERSION = '0.0.1';
 
     public function run($argv) {
-        echo "Running...\n";
+        echo 'Ingesta ', self::VERSION, ": Running...\n";
     }
 }
 
