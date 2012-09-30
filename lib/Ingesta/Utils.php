@@ -9,6 +9,24 @@ class Utils {
     *
     * Do not use if you are using Composer to autoload dependencies.
     ******************************************************************/
+    public static function classNameToFilePath($className) {
+        $className = ltrim($className, '\\');
+        $lastNsPos = strripos($className, '\\');
+        $filePath  = '';
+
+        if ($lastNsPos) {
+            $namespace = substr($className, 0, $lastNsPos);
+            $className = substr($className, $lastNsPos + 1);
+            $filePath  = str_replace('\\', DIRECTORY_SEPARATOR, $namespace)
+                            . DIRECTORY_SEPARATOR;
+        }
+
+        $filePath .= str_replace('_', DIRECTORY_SEPARATOR, $className) 
+            . '.php';
+
+        return $filePath;
+    }
+
     public static function autoload($className) {
         $fileName  = self::$__libDir;
         $classPath = str_replace('\\', '/', ltrim($className, '\\'));
