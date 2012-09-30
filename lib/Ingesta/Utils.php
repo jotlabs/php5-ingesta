@@ -29,9 +29,7 @@ class Utils {
 
     public static function autoload($className) {
         $fileName  = self::$__libDir;
-        $classPath = str_replace('\\', '/', ltrim($className, '\\'));
-        $classPath = str_replace('_',  '/', $classPath);
-        $fileName .= $classPath . '.php';
+        $fileName .= self::classNameToFilePath($className);
 
         if (file_exists($fileName)) {
             require $fileName;
