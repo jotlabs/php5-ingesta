@@ -2,9 +2,10 @@
 <?php
 
 require "lib/Ingesta/Utils.php";
-\Ingesta\Utils::registerAutoloader();
+use Ingesta\Utils;
+use Ingesta\Ingesta;
 
-$ingesta = new \Ingesta\Ingesta();
+Utils::registerAutoloader();
+
+$ingesta = new Ingesta();
 $ingesta->run($argv);
-
-?>
