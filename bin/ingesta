@@ -4,5 +4,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Ingesta\Ingesta;
 
-$ingesta = new Ingesta();
-$ingesta->run($argv);
+Ingesta::run();
+
+//$ingesta = new Ingesta();
+//$ingesta->run($argv);
