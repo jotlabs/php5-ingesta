@@ -1,0 +1,7 @@
+# Ignore editing backups
+*~
+*.swp
+*.DS_Store
+
+vendor/
+
