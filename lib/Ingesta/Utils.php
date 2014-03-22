@@ -24,12 +24,12 @@ class Utils
     public static function registerAutoloader()
     {
         $classFile = str_replace('\\', '/', __CLASS__ . '.php');
-        self::$__libDir = str_replace($classFile, '', __FILE__);
+        self::$libDir = str_replace($classFile, '', __FILE__);
         spl_autoload_register(__NAMESPACE__ . "\\Utils::autoload");
     }
 
 
-    protected static function classNameToFilePath($className)
+    public static function classNameToFilePath($className)
     {
         $className = ltrim($className, '\\');
         $lastNsPos = strripos($className, '\\');
