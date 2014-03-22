@@ -13,6 +13,7 @@ class Ingesta
 
     public static function run()
     {
+        echo 'Ingesta v', self::VERSION, "\n";
         $self = new Ingesta();
         $cmdArgs = $self->getCmdArgs();
         $self->execute($cmdArgs);
@@ -21,7 +22,6 @@ class Ingesta
 
     public function execute($args)
     {
-        echo 'Ingesta ', self::VERSION, ": Running...\n";
         print_r($args);
     }
 
