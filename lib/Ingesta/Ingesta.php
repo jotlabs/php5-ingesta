@@ -5,6 +5,11 @@ class Ingesta
 {
     const VERSION = '0.0.1';
 
+    protected static $shortCmdOptions = '';
+    protected static $longCmdOptions  = array(
+        'help'
+    );
+
 
     public static function run()
     {
@@ -24,10 +29,8 @@ class Ingesta
     protected function getCmdArgs()
     {
         $args = getopt(
-            '',
-            array(
-                'help'
-            )
+            self::$shortCmdOptions,
+            self::$longCmdOptions
         );
 
         return $args;
