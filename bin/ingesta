@@ -1,11 +1,8 @@
 #!/usr/bin/env php
 <?php
+require_once __DIR__ . '/../vendor/autoload.php';
 
-require "lib/Ingesta/Utils.php";
-use Ingesta\Utils;
 use Ingesta\Ingesta;
-
-Utils::registerAutoloader();
 
 $ingesta = new Ingesta();
 $ingesta->run($argv);
