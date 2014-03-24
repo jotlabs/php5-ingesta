@@ -11,7 +11,7 @@ class WordpressTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $factory = new WordpressFactory();
-        //$factory->setUnitTestMode(true);
+        $factory->setTestMode(true);
 
         $this->wordpress = $factory->getWordpressClient('http://techcrunch.com/xmlrpc.php');
     }
@@ -22,5 +22,13 @@ class WordpressTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(class_exists('Ingesta\Services\Wordpress\Wordpress'));
         $this->assertNotNull($this->wordpress);
         $this->assertTrue(is_a($this->wordpress, 'Ingesta\Services\Wordpress\Wordpress'));
+    }
+
+
+    public function testSayHelloReturnsResponse()
+    {
+        $response = $this->wordpress->sayHello();
+        $this->assertNotNull($response);
+        $this->assertEquals('Hello from mock xmlrpc client.', $response);
     }
 }
