@@ -10,7 +10,7 @@ class WordpressFactory
     protected $mockClient;
 
 
-    public function getWordpressClient($apiEndpoint)
+    public function getWordpressClient($apiEndpoint, $credentials = null)
     {
         $client = null;
 
@@ -18,11 +18,13 @@ class WordpressFactory
             $client = $this->initMockClient($apiEndpoint);
 
         } else {
-            $client    = $this->initXmlRpcClient($apiEndpoint);
+            $client = $this->initXmlRpcClient($apiEndpoint);
 
         }
 
         $wordpress = new Wordpress($client);
+        $wordpress->setCredentials($credentials);
+
         return $wordpress;
     }
 
