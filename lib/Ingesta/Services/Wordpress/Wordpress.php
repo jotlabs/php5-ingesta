@@ -1,6 +1,8 @@
 <?php
 namespace Ingesta\Services\Wordpress;
 
+use Ingesta\Services\Wordpress\Wrappers\Posts;
+
 class Wordpress
 {
     const METHOD_SAY_HELLO = 'demo.sayHello';
@@ -33,14 +35,24 @@ class Wordpress
 
     public function getPosts()
     {
-        $posts = $this->client->callMethod(
-            self::METHOD_GET_POSTS,
-            array(
-                1,
-                $credentials->getUsername(),
-                $credentials->getPassword()
-            )
-        );
+        $posts = null;
+
+        if ($this->credentials) {
+            $response = $this->client->callMethod(
+                self::METHOD_GET_POSTS,
+                array(
+                    1,
+                    $this->credentials->getUsername(),
+                    $this->credentials->getPassword()
+                )
+            );
+
+            $posts = new Posts($response);
+
+        } else {
+            throw new AuthenticationRequiredException("Wordpress endpoint 'wp.getPosts' requires authentication.");
+
+        }
         return $posts;
     }
 }
