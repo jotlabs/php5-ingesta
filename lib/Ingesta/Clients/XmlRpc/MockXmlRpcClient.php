@@ -20,15 +20,18 @@ class MockXmlRpcClient implements XmlRpc
 
     public function callMethod($method, $params = null)
     {
+        $response = null;
+
         if (array_key_exists($method, $this->methodResponses)) {
             $response = $this->methodResponses[$method];
         }
+
         return $response;
     }
 
 
     public function addMethodResponse($method, $response)
     {
-        $this->methodResponse[$method] = $response;
+        $this->methodResponses[$method] = $response;
     }
 }
