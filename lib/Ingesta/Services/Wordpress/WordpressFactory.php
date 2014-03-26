@@ -7,6 +7,7 @@ use Ingesta\Clients\XmlRpc\MockXmlRpcClient;
 class WordpressFactory
 {
     protected $isTestMode = false;
+    protected $mockClient;
 
 
     public function getWordpressClient($apiEndpoint)
@@ -32,6 +33,14 @@ class WordpressFactory
     }
 
 
+    public function setMockClient($mockClient)
+    {
+        if ($this->isTestMode) {
+            $this->mockClient = $mockClient;
+        }
+    }
+
+
     protected function initXmlRpcClient($apiEndpoint)
     {
         // TODO: Refactor this into an XmlRpcFactory
@@ -42,7 +51,14 @@ class WordpressFactory
 
     protected function initMockClient($apiEndpoint)
     {
-        $client = new MockXmlRpcClient($apiEndpoint);
+        if ($this->mockClient) {
+            $client = $this->mockClient;
+
+        } else {
+            $client = new MockXmlRpcClient($apiEndpoint);
+
+        }
+
         return $client;
     }
 }
