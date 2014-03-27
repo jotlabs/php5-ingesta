@@ -53,6 +53,11 @@ class WordpressTest extends PHPUnit_Framework_TestCase
         $post = $posts->getPost(0);
         $this->assertNotNull($post);
         $this->assertTrue(is_a($post, 'Ingesta\Services\Wordpress\Wrappers\Post'));
+
+        $this->assertNotNull($post->getPostId());
+        $this->assertNotNull($post->getTitle());
+        $this->assertNotNull($post->getLink());
+        $this->assertNotNull($post->getContent());
     }
 
 
