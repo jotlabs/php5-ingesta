@@ -61,13 +61,33 @@ class WordpressTest extends PHPUnit_Framework_TestCase
     }
 
 
+    public function testGetWpPostReturnsWordpressResponse()
+    {
+        $post = $this->wordpress->getPost(1);
+        $this->assertNotNull($post);
+        $this->assertTrue(is_a($post, 'Ingesta\Services\Wordpress\Wrappers\Post'));
+
+        $this->assertNotNull($post->getPostId());
+        $this->assertNotNull($post->getTitle());
+        $this->assertNotNull($post->getLink());
+        $this->assertNotNull($post->getContent());
+    }
+
+
     protected function setUpMockClient()
     {
         $mockClient = new MockXmlRpcClient('unit-test');
 
+
         $mockClient->addMethodResponse(
             'wp.getPosts',
             $this->getWpGetPostsResponse()
+        );
+
+
+        $mockClient->addMethodResponse(
+            'wp.getPost',
+            $this->getWpGetPostResponse()
         );
 
         return $mockClient;
@@ -77,6 +97,13 @@ class WordpressTest extends PHPUnit_Framework_TestCase
     protected function getWpGetPostsResponse()
     {
         include STUB_DIR . '/xmlrpc-responses/wp-getPosts.php';
+        return $response;
+    }
+
+
+    protected function getWpGetPostResponse()
+    {
+        include STUB_DIR . '/xmlrpc-responses/wp-getPost.php';
         return $response;
     }
 }
