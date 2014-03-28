@@ -31,13 +31,13 @@ class Post
 
     public function getPublishedDate()
     {
-        return $this->post->post_date_gmt;
+        return $this->post->post_date;
     }
 
 
     public function getModifiedDate()
     {
-        return $this->post->post_modified_gmt;
+        return $this->post->post_modified;
     }
 
 
