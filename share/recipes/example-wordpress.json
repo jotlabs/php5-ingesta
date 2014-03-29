@@ -1,0 +1,15 @@
+{
+    "input": {
+        "type": "wordpress",
+        "url": "http://[YOUR_SUBDOMAIN].wordpress.com/xmlrpc.php",
+        "username": "[YOUR_WORDPRESS_USERNAME]",
+        "password": "[YOUR_WORDPRESS_PASSWORD]",
+        "method": "wp.getPosts"
+    },
+    "processing": {
+
+    },
+    "output": {
+
+    }
+}
