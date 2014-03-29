@@ -4,11 +4,7 @@ Ingesta
 A service that ingests external data, processes it, and exports it.
 
 
-Zend XMLRPC hacks
------------------
+Currently supports:
 
-To get the XMLRPC client working, after `composer install`, edit the following:
+* [Wordpress XML-RPC API](http://codex.wordpress.org/XML-RPC_WordPress_API)
 
-In `vendor/zendframework/zend-xmlrpc/Zend/XmlRpc/Response.php` line 157, change `XmlSecurity` to `\ZendXml\Security`.
-
-In `vendor/zendframework/zend-xmlrpc/Zend/XmlRpc/Fault.php` line 184, change `XmlSecurity` to `\ZendXml\Security`.
