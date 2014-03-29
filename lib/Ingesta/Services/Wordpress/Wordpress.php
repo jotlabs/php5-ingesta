@@ -1,10 +1,11 @@
 <?php
 namespace Ingesta\Services\Wordpress;
 
+use Ingesta\Services\InputGetter;
 use Ingesta\Services\Wordpress\Wrappers\Posts;
 use Ingesta\Services\Wordpress\Wrappers\Post;
 
-class Wordpress
+class Wordpress implements InputGetter
 {
     const METHOD_SAY_HELLO = 'demo.sayHello';
     const METHOD_GET_POSTS = 'wp.getPosts';
@@ -23,6 +24,21 @@ class Wordpress
     public function setCredentials($credentials)
     {
         $this->credentials = $credentials;
+    }
+
+
+    public function getInput($inputArgs)
+    {
+        $input  = null;
+        $method = $inputArgs->method;
+
+        switch ($method) {
+            case self::METHOD_GET_POSTS:
+                $input = $this->getPosts();
+                break;
+        }
+
+        return $input;
     }
 
 
