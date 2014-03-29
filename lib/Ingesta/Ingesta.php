@@ -1,6 +1,8 @@
 <?php
 namespace Ingesta;
 
+use Ingesta\Services\InputFactory;
+
 class Ingesta
 {
     const VERSION = '0.0.1';
@@ -24,7 +26,7 @@ class Ingesta
 
     public function execute($args)
     {
-        print_r($args);
+        //print_r($args);
         if (isset($args['recipe'])) {
             $recipeName = $args['recipe'];
             $recipe = $this->loadRecipe($recipeName);
@@ -40,7 +42,18 @@ class Ingesta
     {
         echo "Recipe to run: ";
         print_r($recipe);
+        $input = $this->getInput($recipe->input);
 
+    }
+
+
+    protected function getInput($inputConfig)
+    {
+        $inputFactory = InputFactory::getInstance();
+        $input        = $inputFactory->getInput($inputConfig);
+        echo "Input: "; print_r($input);
+
+        return $input;
     }
 
 
