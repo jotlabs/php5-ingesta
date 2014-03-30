@@ -1,7 +1,7 @@
 <?php
 namespace Ingesta;
 
-use Ingesta\Services\InputFactory;
+use Ingesta\Inputs\InputFactory;
 
 class Ingesta
 {
