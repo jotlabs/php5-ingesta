@@ -19,14 +19,17 @@ class Ingesta
     public static function run()
     {
         echo 'Ingesta v', self::VERSION, "\n";
-        $self    = new Ingesta();
-        $cmdArgs = $self->getCmdArgs();
-        $self->execute($cmdArgs);
+        $self     = new Ingesta();
+        $cmdArgs  = $self->getCmdArgs();
+        $response = $self->execute($cmdArgs);
+        return $response;
     }
 
 
     public function execute($args)
     {
+        $response = false;
+
         //print_r($args);
         if (isset($args['recipe'])) {
             $recipeName = $args['recipe'];
@@ -41,14 +44,17 @@ class Ingesta
                     echo "Running recipe '$recipeName'. First time\n";
                 }
 
-                $this->executeRecipe($recipe, $state);
+                $respons = $this->executeRecipe($recipe, $state);
 
                 $state->lastRun = date('c');
                 $this->saveState($recipeName, $state);
+
             } else {
                 echo "No recipe named '{$recipeName}' found. Exiting.\n";
             }
         }
+
+        return $response;
     }
 
 
