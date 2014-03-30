@@ -33,12 +33,20 @@ class Ingesta
             $recipe = $this->loadRecipe($recipeName);
 
             if ($recipe) {
-                echo "Running recipe '$recipeName'\n";
                 $state = $this->loadState($recipeName);
+
+                if (isset($state->lastRun)) {
+                    echo "Running recipe '$recipeName'. Last run: {$state->lastRun}\n";
+                } else {
+                    echo "Running recipe '$recipeName'. First time\n";
+                }
+
                 $this->executeRecipe($recipe, $state);
 
                 $state->lastRun = date('c');
                 $this->saveState($recipeName, $state);
+            } else {
+                echo "No recipe named '{$recipeName}' found. Exiting.\n";
             }
         }
     }
