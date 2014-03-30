@@ -1,7 +1,7 @@
 <?php
 namespace Ingesta\Services\Wordpress;
 
-use Ingesta\Services\InputGetter;
+use Ingesta\Inputs\InputGetter;
 use Ingesta\Services\Wordpress\Wrappers\Posts;
 use Ingesta\Services\Wordpress\Wrappers\Post;
 
