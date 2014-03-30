@@ -1,5 +1,5 @@
 <?php
-namespace Ingesta\Services;
+namespace Ingesta\Inputs;
 
 use Ingesta\Services\Wordpress\WordpressFactory;
 use Ingesta\Services\Wordpress\Credentials;

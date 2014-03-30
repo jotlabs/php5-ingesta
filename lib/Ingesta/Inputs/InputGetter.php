@@ -1,5 +1,5 @@
 <?php
-namespace Ingesta\Services;
+namespace Ingesta\Inputs;
 
 interface InputGetter
 {
