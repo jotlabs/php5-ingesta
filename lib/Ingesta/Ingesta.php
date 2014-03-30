@@ -33,6 +33,7 @@ class Ingesta
             $recipe = $this->loadRecipe($recipeName);
 
             if ($recipe) {
+                echo "Running recipe '$recipeName'\n";
                 $state = $this->loadState($recipeName);
                 $this->executeRecipe($recipe, $state);
 
@@ -45,9 +46,6 @@ class Ingesta
 
     protected function executeRecipe($recipe, $state)
     {
-        echo "Recipe to run: ";
-        print_r($recipe);
-        print_r($state);
         $input     = $this->getInput($recipe->input);
 
     }
@@ -81,7 +79,7 @@ class Ingesta
         $state    = null;
         $filePath = self::STATE_DIR . '/' . $recipeName . '.state.json';
 
-        if (is_dir(dirname($filePath))) {
+        if (!is_dir(dirname($filePath))) {
             mkdir(dirname($filePath), 0777, true);
         }
 
