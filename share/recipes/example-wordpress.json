@@ -7,7 +7,7 @@
         "method": "wp.getPosts"
     },
     "processing": {
-
+        "filter": "updatedSinceLastCheck"
     },
     "output": {
 
