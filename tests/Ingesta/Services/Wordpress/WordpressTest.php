@@ -43,14 +43,14 @@ class WordpressTest extends PHPUnit_Framework_TestCase
     }
 
 
-    public function testGetWpPostsReturnsWordpressResponse()
+    public function testGetWpPostsReturnsArrayOfWordpressPosts()
     {
         $posts = $this->wordpress->getPosts();
         $this->assertNotNull($posts);
-        $this->assertTrue(is_a($posts, 'Ingesta\Services\Wordpress\Wrappers\Posts'));
-        $this->assertEquals(1, $posts->getNumberOfPosts());
+        $this->assertTrue(is_array($posts));
+        $this->assertEquals(1, count($posts));
 
-        $post = $posts->getPost(0);
+        $post = $posts[0];
         $this->assertNotNull($post);
         $this->assertTrue(is_a($post, 'Ingesta\Services\Wordpress\Wrappers\Post'));
 
