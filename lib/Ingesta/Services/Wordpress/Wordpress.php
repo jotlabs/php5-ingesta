@@ -2,7 +2,6 @@
 namespace Ingesta\Services\Wordpress;
 
 use Ingesta\Inputs\InputGetter;
-use Ingesta\Services\Wordpress\Wrappers\Posts;
 use Ingesta\Services\Wordpress\Wrappers\Post;
 
 class Wordpress implements InputGetter
@@ -65,7 +64,14 @@ class Wordpress implements InputGetter
                 )
             );
 
-            $posts = new Posts($response);
+            if (is_array($response) && count($response)) {
+                $posts = array();
+
+                foreach ($response as $postData) {
+                    $post = new Post($postData);
+                    $posts[] = $post;
+                }
+            }
 
         } else {
             throw new AuthenticationRequiredException("Wordpress endpoint 'wp.getPosts' requires authentication.");
