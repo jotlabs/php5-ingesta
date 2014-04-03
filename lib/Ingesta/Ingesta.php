@@ -2,6 +2,7 @@
 namespace Ingesta;
 
 use Ingesta\Inputs\InputFactory;
+use Ingesta\Processors\ProcessorFactory;
 
 class Ingesta
 {
@@ -61,6 +62,7 @@ class Ingesta
     protected function executeRecipe($recipe, $state)
     {
         $input     = $this->getInput($recipe->input);
+        $processed = $this->doProcessing($input, $recipe->processing, $state);
 
     }
 
@@ -69,9 +71,19 @@ class Ingesta
     {
         $inputFactory = InputFactory::getInstance();
         $input        = $inputFactory->getInput($inputConfig);
-        echo "Input: "; print_r($input);
+        //echo "Input: "; print_r($input);
 
         return $input;
+    }
+
+
+    protected function doProcessing($inputData, $processingRules, $state)
+    {
+        $processorFactory = ProcessorFactory::getInstance();
+        $processor        = $processorFactory->getProcessor($processingRules, $state);
+        //print_r($processor);
+        $processed        = $processor->process($inputData);
+        return $processed;
     }
 
 
