@@ -10,7 +10,7 @@ class WordpressFactoryTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->factory = new WordpressFactory();
+        $this->factory = WordpressFactory::getInstance();
     }
 
 

@@ -12,7 +12,7 @@ class WordpressTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $factory = new WordpressFactory();
+        $factory = WordpressFactory::getInstance();
         $factory->setTestMode(true);
 
         $mockClient = $this->setUpMockClient();
