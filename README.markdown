@@ -39,7 +39,8 @@ An example recipe, for gathering updates from a Wordpress blog looks like this:
             "method": "wp.getPosts"
         },
         "processing": {
-            "filter": "updatedSinceLastCheck"
+            "filter": "updatedSinceLastCheck",
+            "format": "SimpleBlogFormat"
         },
         "output": {
             "type": "JsonFileWriter",
