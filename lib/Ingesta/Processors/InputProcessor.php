@@ -17,6 +17,12 @@ class InputProcessor implements Processor
     }
 
 
+    public function addFormatter($formatter)
+    {
+        $this->pipeline[] = $formatter;
+    }
+
+
     public function process($input)
     {
         $processed = null;
@@ -54,6 +60,8 @@ class InputProcessor implements Processor
             if ($response === false) {
                 $item = false;
                 break;
+            } elseif ($response !== true) {
+                $item = $response;
             }
         }
         return $item;
