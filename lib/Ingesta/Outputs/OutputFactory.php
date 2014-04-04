@@ -30,7 +30,7 @@ class OutputFactory
         $output = null;
 
         //print_r($config);
-        switch ($config->format) {
+        switch ($config->type) {
             case 'JsonFileWriter':
                 $output = $this->getJsonFileWriter($config);
                 break;
