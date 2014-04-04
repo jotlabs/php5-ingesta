@@ -3,10 +3,12 @@ namespace Ingesta\Processors;
 
 use Ingesta\Processors\Filters\DateFilter;
 use Ingesta\Processors\Adapters\MethodCallAdapter;
+use Ingesta\Processors\Formatters\SimpleBlogFormatter;
 
 class ProcessorFactory
 {
     const FILTER_UPDATED_SINCE_LAST_CHECK = 'updatedSinceLastCheck';
+    const FORMAT_SIMPLE_BLOG_OUTPUT       = 'SimpleBlogFormat';
 
     protected static $INSTANCE;
 
@@ -37,6 +39,13 @@ class ProcessorFactory
             }
         }
 
+        if (!empty($processingRules->format)) {
+            $formatter = $this->getFormatter($processingRules->format, $state);
+            if ($formatter) {
+                $processor->addFormatter($formatter);
+            }
+        }
+
         return $processor;
     }
 
@@ -57,5 +66,18 @@ class ProcessorFactory
         }
 
         return $filter;
+    }
+
+
+    protected function getFormatter($formatName, $state)
+    {
+        $formatter = null;
+        switch ($formatName) {
+            case self::FORMAT_SIMPLE_BLOG_OUTPUT:
+                $formatter = new SimpleBlogFormatter();
+                break;
+        }
+
+        return $formatter;
     }
 }
