@@ -7,9 +7,11 @@
         "method": "wp.getPosts"
     },
     "processing": {
-        "filter": "updatedSinceLastCheck"
+        "filter": "updatedSinceLastCheck",
+        "format": "SimpleBlogFormat"
     },
     "output": {
-
+        "type": "JsonFileWriter",
+        "file": "tmp/cms-update.json"
     }
 }
