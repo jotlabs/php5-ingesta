@@ -42,7 +42,8 @@ An example recipe, for gathering updates from a Wordpress blog looks like this:
             "filter": "updatedSinceLastCheck"
         },
         "output": {
-
+            "type": "JsonFileWriter",
+            "file": "tmp/cms-update.json"
         }
     }
 
