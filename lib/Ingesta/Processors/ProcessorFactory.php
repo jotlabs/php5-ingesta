@@ -49,7 +49,9 @@ class ProcessorFactory
                 $filter     = new MethodCallAdapter(
                     array($dateFilter, 'isDateAfter'),
                     //array('20140328T12:00:00')
-                    array($state->lastRun)
+                    array(
+                        empty($state->lastRun) ? 0 : $state->lastRun
+                    )
                 );
                 break;
         }
