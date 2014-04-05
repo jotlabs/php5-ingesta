@@ -35,14 +35,22 @@ class ProcessorFactory
         if (!empty($processingRules->filter)) {
             $filter = $this->getFilter($processingRules->filter, $state);
             if ($filter) {
+                echo "[-INFO-] Adding filter '{$processingRules->filter}'\n";
                 $processor->addFilter($filter);
             }
         }
 
         if (!empty($processingRules->format)) {
-            $formatter = $this->getFormatter($processingRules->format, $state);
-            if ($formatter) {
-                $processor->addFormatter($formatter);
+            if (!is_array($processingRules->format)) {
+                $processingRules->format = array($processingRules->format);
+            }
+
+            foreach ($processingRules->format as $format) {
+                $formatter = $this->getFormatter($format, $state);
+                if ($formatter) {
+                    echo "[-INFO-] Adding formatter '{$format}'\n";
+                    $processor->addFormatter($formatter);
+                }
             }
         }
 
