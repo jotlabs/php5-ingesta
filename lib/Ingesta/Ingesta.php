@@ -62,19 +62,18 @@ class Ingesta
 
     protected function executeRecipe($recipe, $state)
     {
-        $input     = $this->getInput($recipe->input);
+        $input     = $this->readInput($recipe->input);
         $processed = $this->doProcessing($input, $recipe->processing, $state);
-        $response  = $this->setOutput($processed, $recipe->output);
+        $response  = $this->writeOutput($processed, $recipe->output);
 
     }
 
 
-    protected function getInput($inputConfig)
+    protected function readInput($inputConfig)
     {
         $inputFactory = InputFactory::getInstance();
-        $input        = $inputFactory->getInput($inputConfig);
-        //echo "Input: "; print_r($input);
-
+        $reader       = $inputFactory->getReader($inputConfig);
+        $input        = $reader->getInput($inputConfig);
         return $input;
     }
 
@@ -89,11 +88,20 @@ class Ingesta
     }
 
 
-    protected function setOutput($input, $outputConfig)
+    protected function writeOutput($input, $outputConfig)
     {
-        $outputFactory = OutputFactory::getInstance();
-        $output        = $outputFactory->getOutput($outputConfig);
-        $response      = $output->write($input);
+        $response = false;
+
+        if (!empty($input)) {
+            $outputFactory = OutputFactory::getInstance();
+            $writer        = $outputFactory->getWriter($outputConfig);
+            $response      = $writer->write($input);
+
+        } else {
+            echo "[-INFO-] No output to write.\n";
+
+        }
+
         return $response;
     }
 
