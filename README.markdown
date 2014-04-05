@@ -40,11 +40,14 @@ An example recipe, for gathering updates from a Wordpress blog looks like this:
         },
         "processing": {
             "filter": "updatedSinceLastCheck",
-            "format": "SimpleBlogFormat"
+            "format": [
+                "WordpressContentFormat"
+                "SimpleBlogFormat"
+            ]
         },
         "output": {
             "type": "JsonFileWriter",
-            "file": "tmp/cms-update.json"
+            "file": "/tmp/wp-updated-posts.json"
         }
     }
 
