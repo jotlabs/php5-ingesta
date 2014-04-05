@@ -9,6 +9,7 @@ class Post
     protected $post;
     protected $categories;
     protected $tags;
+    protected $customFields;
 
 
     public function __construct($post)
@@ -112,6 +113,19 @@ class Post
         }
 
         return $this->tags;
+    }
+
+
+    public function getCustomFields()
+    {
+        if (empty($this->customFields)) {
+            $this->customFields = array();
+            foreach ($this->post->custom_fields as $customField) {
+                $this->customFields[$customField['key']] = $customField['value'];
+            }
+        }
+
+        return $this->customFields;
     }
 
 
