@@ -51,7 +51,7 @@ An example recipe, for gathering updates from a Wordpress blog looks like this:
         }
     }
 
-Save this as `example-wordpress.json` in `share\recipes\`, and run it with the following:
+Save this to `share/recipes/example-wordpress.json` and run it with the following:
 
     bin/ingesta --recipe=example-wordpress
 
