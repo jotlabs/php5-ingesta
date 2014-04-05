@@ -26,11 +26,10 @@ class InputFactory
     }
 
 
-    public function getInput($inputArgs)
+    public function getReader($inputArgs)
     {
-        $service = $this->getService($inputArgs);
-        $input   = $service->getInput($inputArgs);
-        return $input;
+        $reader = $this->getService($inputArgs);
+        return $reader;
     }
 
 
