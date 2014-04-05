@@ -54,10 +54,13 @@ class InputProcessor implements Processor
 
     protected function processItem($item)
     {
-        echo "Processing: {$item->getTitle()}\n";
+        echo "[-INFO-] Processing: {$item->getTitle()}\n";
+
         foreach ($this->pipeline as $step) {
             $response = $step->process($item);
+
             if ($response === false) {
+                echo "[-INFO-] Filtered out: {$item->getTitle()}\n";
                 $item = false;
                 break;
             } elseif ($response !== true) {
