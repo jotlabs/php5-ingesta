@@ -37,6 +37,8 @@ class ProcessorFactory
             if ($filter) {
                 echo "[-INFO-] Adding filter '{$processingRules->filter}'\n";
                 $processor->addFilter($filter);
+            } else {
+                echo "\033[1;33m[-WARN-]\033[0m Filter '{$processingRules->filter}' not found.\n";
             }
         }
 
@@ -50,6 +52,8 @@ class ProcessorFactory
                 if ($formatter) {
                     echo "[-INFO-] Adding formatter '{$format}'\n";
                     $processor->addFormatter($formatter);
+                } else {
+                    echo "\033[1;33m[-WARN-]\033[0m Formatter '{$format}' not found.\n";
                 }
             }
         }
