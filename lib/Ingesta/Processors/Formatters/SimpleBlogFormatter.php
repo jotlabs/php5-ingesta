@@ -19,8 +19,8 @@ class SimpleBlogFormatter implements Processor
             'updated'   => $input->getModifiedDate(),
             'content'   => $input->getContent(),
 
-            'categories' => $input->getCategories(),
-            'tags'       => $input->getTags(),
+            'categories' => $this->processTerms($input->getCategories()),
+            'tags'       => $this->processTerms($input->getTags()),
         );
 
         $meta = $this->getYoastData($input);
@@ -30,6 +30,29 @@ class SimpleBlogFormatter implements Processor
         }
 
         return (object) $blog;
+    }
+
+
+    protected function processTerms($termList)
+    {
+        $terms = array();
+
+        if ($termList) {
+            foreach ($termList as $termItem) {
+                $term = array(
+                    'termId' => $termItem->getTermId(),
+                    'name' => $termItem->getName(),
+                    'slug' => $termItem->getSlug(),
+                    'description' => $termItem->getDescription(),
+                    'taxonomy'    => $termItem->getTaxonomy(),
+                    'total' => $termItem->getTotal()
+                );
+
+                $terms[] = $term;
+            }
+        }
+
+        return $terms;
     }
 
 
