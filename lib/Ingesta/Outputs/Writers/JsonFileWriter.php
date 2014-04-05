@@ -20,7 +20,7 @@ class JsonFileWriter implements OutputWriter
         $response = file_put_contents($this->filePath, $json);
 
         $byteSize = strlen($json);
-        echo "Written {$byteSize} bytes to {$this->filePath}.\n";
+        echo "[-INFO-] Written {$byteSize} bytes to {$this->filePath}.\n";
 
         return $response;
     }
