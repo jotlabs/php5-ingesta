@@ -16,8 +16,11 @@ class JsonFileWriter implements OutputWriter
     public function write($output)
     {
         $json = json_encode($output);
-        print_r($json);
+        //print_r($json);
         $response = file_put_contents($this->filePath, $json);
+
+        $byteSize = strlen($json);
+        echo "Written {$byteSize} bytes to {$this->filePath}.\n";
 
         return $response;
     }
