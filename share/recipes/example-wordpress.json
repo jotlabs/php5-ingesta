@@ -8,7 +8,10 @@
     },
     "processing": {
         "filter": "updatedSinceLastCheck",
-        "format": "SimpleBlogFormat"
+        "format": [
+            "WordpressContentFormat"
+            "SimpleBlogFormat"
+        ]
     },
     "output": {
         "type": "JsonFileWriter",
