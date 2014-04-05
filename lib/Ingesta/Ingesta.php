@@ -41,9 +41,9 @@ class Ingesta
                 $state = $this->loadState($recipeName);
 
                 if (isset($state->lastRun)) {
-                    echo "Running recipe '$recipeName'. Last run: {$state->lastRun}\n";
+                    echo "[-INFO-] Running recipe '\033[0;32m{$recipeName}\033[0m'. Last run: {$state->lastRun}\n";
                 } else {
-                    echo "Running recipe '$recipeName'. First time\n";
+                    echo "[-INFO-] Running recipe '\033[0;32m{$recipeName}\033[0m'. First time\n";
                 }
 
                 $respons = $this->executeRecipe($recipe, $state);
