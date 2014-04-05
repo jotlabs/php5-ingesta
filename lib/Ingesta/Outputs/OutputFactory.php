@@ -24,26 +24,25 @@ class OutputFactory
     }
 
 
-    public function getOutput($config)
+    public function getWriter($config)
     {
 
-        $output = null;
+        $writer = null;
 
-        //print_r($config);
         switch ($config->type) {
             case 'JsonFileWriter':
-                $output = $this->getJsonFileWriter($config);
+                $writer = $this->getJsonFileWriter($config);
                 break;
         }
 
-        return $output;
+        return $writer;
     }
 
 
     protected function getJsonFileWriter($config)
     {
         $filePath = $config->file;
-        $output = new JsonFileWriter($filePath);
-        return $output;
+        $writer = new JsonFileWriter($filePath);
+        return $writer;
     }
 }
