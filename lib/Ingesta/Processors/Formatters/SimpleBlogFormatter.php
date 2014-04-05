@@ -5,6 +5,10 @@ use Ingesta\Processors\Processor;
 
 class SimpleBlogFormatter implements Processor
 {
+    protected static $customFieldMapping = array(
+        '_yoast_wpseo_metadesc' => 'excerpt'
+    );
+
     public function process($input)
     {
         //echo __CLASS__ . ":\n";
@@ -58,8 +62,15 @@ class SimpleBlogFormatter implements Processor
 
     protected function getYoastData($input)
     {
-        $meta = null;
+        $customFields = $input->getCustomFields();
+        //print_r($customFields);
+        $meta = array();
 
+        foreach (self::$customFieldMapping as $customKey => $metaKey) {
+            if (array_key_exists($customKey, $customFields)) {
+                $meta[$metaKey] = $customFields[$customKey];
+            }
+        }
 
         return $meta;
     }
