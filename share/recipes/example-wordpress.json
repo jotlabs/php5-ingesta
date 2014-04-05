@@ -12,6 +12,6 @@
     },
     "output": {
         "type": "JsonFileWriter",
-        "file": "tmp/cms-update.json"
+        "file": "/tmp/wp-updated-posts.json"
     }
 }
