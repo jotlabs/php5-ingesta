@@ -51,3 +51,10 @@ An example recipe, for gathering updates from a Wordpress blog looks like this:
         }
     }
 
+Save this as `example-wordpress.json` in `share\recipes\`, and run it with the following:
+
+    bin/ingesta --recipe=example-wordpress
+
+This will connect to your Wordpress instance's XML-RPC api endpoint to retrieve recent posts, and outputs a simple JSON document to `/tmp/wp-updated-posts.json` containing just the posts that have updated since the last run.
+
+
