@@ -60,6 +60,12 @@ class Post
     }
 
 
+    public function setContent($content)
+    {
+        $this->post->post_content = $content;
+    }
+
+
     public function getLink()
     {
         return $this->post->link;
