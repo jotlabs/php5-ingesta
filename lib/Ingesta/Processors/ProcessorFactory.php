@@ -4,11 +4,13 @@ namespace Ingesta\Processors;
 use Ingesta\Processors\Filters\DateFilter;
 use Ingesta\Processors\Adapters\MethodCallAdapter;
 use Ingesta\Processors\Formatters\SimpleBlogFormatter;
+use Ingesta\Processors\Formatters\WordpressContentFormatter;
 
 class ProcessorFactory
 {
     const FILTER_UPDATED_SINCE_LAST_CHECK = 'updatedSinceLastCheck';
     const FORMAT_SIMPLE_BLOG_OUTPUT       = 'SimpleBlogFormat';
+    const FORMAT_WORDPRESS_CONTENT        = 'WordpressContentFormat';
 
     protected static $INSTANCE;
 
@@ -87,6 +89,9 @@ class ProcessorFactory
         switch ($formatName) {
             case self::FORMAT_SIMPLE_BLOG_OUTPUT:
                 $formatter = new SimpleBlogFormatter();
+                break;
+            case self::FORMAT_WORDPRESS_CONTENT:
+                $formatter = new WordpressContentFormatter();
                 break;
         }
 
