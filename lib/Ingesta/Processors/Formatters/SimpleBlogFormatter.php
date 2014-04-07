@@ -14,6 +14,12 @@ class SimpleBlogFormatter implements Processor
         //echo __CLASS__ . ":\n";
         //print_r($input);
 
+        $thumbnail = '';
+        $content   = $input->getContent();
+        if (preg_match("/src=\"([^\"]+)\"/", $content, $matches)) {
+            $thumbnail = $matches[1];
+        }
+
         $blog = array(
             'guid'      => $input->getGuid(),
             'title'     => $input->getTitle(),
@@ -22,6 +28,7 @@ class SimpleBlogFormatter implements Processor
             'published' => $input->getPublishedDate(),
             'updated'   => $input->getModifiedDate(),
             'content'   => $input->getContent(),
+            'thumbnail' => $thumbnail,
 
             'categories' => $this->processTerms($input->getCategories()),
             'tags'       => $this->processTerms($input->getTags()),
