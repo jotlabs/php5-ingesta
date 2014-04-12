@@ -3,8 +3,47 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "ceb16f0269e4f3c02659d0ae31f8bb8e",
+    "hash": "f081fef91b387e94fd5e66a03d968a65",
     "packages": [
+        {
+            "name": "mikecao/flight",
+            "version": "v1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mikecao/flight.git",
+                "reference": "7e1a098f6cd8a5dcfc8fc7451508dc5f96ed00b5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mikecao/flight/zipball/7e1a098f6cd8a5dcfc8fc7451508dc5f96ed00b5",
+                "reference": "7e1a098f6cd8a5dcfc8fc7451508dc5f96ed00b5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "flight/Flight.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mike Cao",
+                    "email": "mike@mikecao.com",
+                    "homepage": "http://www.mikecao.com/",
+                    "role": "Original Developer"
+                }
+            ],
+            "description": "Flight is a fast, simple, extensible framework for PHP. Flight enables you to quickly and easily build RESTful web applications.",
+            "homepage": "http://flightphp.com",
+            "time": "2013-09-03 05:07:38"
+        },
         {
             "name": "zendframework/zendframework",
             "version": "2.2.6",
