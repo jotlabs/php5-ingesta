@@ -10,10 +10,14 @@ class WeblogUpdates
     * @param string $siteName
     * @param string $siteUrl
     * @param string $feedUrl
-    * @return string
+    * @param string $category
+    * @return struct
     **/
-    public function extendedPing($siteName, $siteUrl, $feedUrl)
+    public function extendedPing($siteName, $siteUrl, $feedUrl = '', $category = '')
     {
-        return "Hello";
+        return array(
+            'flerror' => false,
+            'message' => "Thanks for the ping, {$siteName}."
+        );
     }
 }
