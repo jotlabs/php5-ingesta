@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<methodCall>
+<methodName>weblogUpdates.extendedPing</methodName>
+<params>
+<param><value><string>Geek Declutter</string></value></param>
+<param><value><string>http://geekdeclutter.com/</string></value></param>
+<param><value><string>http://geekdeclutter.com/feed/</string></value></param>
+</params></methodCall>
