@@ -24,7 +24,7 @@ class WordpressContentFormatter implements Processor
             if ($line) {
                 if (preg_match("/^\[caption ([^\]]+)\](.*)\[\/caption\]$/", $line, $matches)) {
                     //print_r($matches);
-                    $buffer[] = "<div style=\"width: 650px\" class=\"wp-caption aligncenter\">{$matches[2]}</div>";
+                    $buffer[] = "<div class=\"media-caption\">{$matches[2]}</div>";
                 } else {
                     $buffer[] = "<p>{$line}</p>";
                 }
