@@ -7,10 +7,12 @@ use Ingesta\Clients\Http\CacheHttp;
 
 class ClientFactory extends FactoryBase
 {
+    const OFFLINE_CONNECTION_TIMEOUT = 10;
     const CACHE_HTTP_CLIENT = 'CachedHttpClient';
 
-    protected $isTestMode   = false;
+    protected $isTestMode    = false;
     protected $isOfflineMode = false;
+    protected $isOnline      = true;
 
     // TODO: should do an offline check.
 
@@ -48,5 +50,24 @@ class ClientFactory extends FactoryBase
     {
         $client = null;
         return $client;
+    }
+
+
+    protected function init()
+    {
+        $this->isOnline = $this->getOnlineState();
+    }
+
+
+    protected function getOnlineState()
+    {
+        $domain = 'example.com.';
+        $ipAddr = gethostbyname($domain);
+        $onlineState = ($domain !== $ipAddr);
+
+        if (!$onlineState) {
+            echo "[-WARN-] DNS resolution failed. Setting Ingesta to offline mode\n";
+        }
+        return $onlineState;
     }
 }
