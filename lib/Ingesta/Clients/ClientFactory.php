@@ -3,6 +3,7 @@ namespace Ingesta\Clients;
 
 use Ingesta\Utils\FactoryBase;
 use Ingesta\Clients\Http\HttpBase;
+use Ingesta\Clients\Http\MockHttp;
 use Ingesta\Clients\Http\CacheHttp;
 
 class ClientFactory extends FactoryBase
@@ -77,9 +78,20 @@ class ClientFactory extends FactoryBase
 
     protected function getOnlineState()
     {
+        $onlineState = true;
+
+        // Do a DNS lookup
         $domain = 'example.com.';
         $ipAddr = gethostbyname($domain);
         $onlineState = ($domain !== $ipAddr);
+
+        // Shell exec a ping
+        //$output = shell_exec('ping -c1 -t1 8.8.8.8');
+        //print_r($output);
+        //if (preg_match("/([0-9\.]+)% packet loss/", $output, $matches)) {
+        //    $loss = floatval($matches[1]);
+        //    $onlineState = ($loss < 40.00);
+        //}
 
         if (!$onlineState) {
             echo "[-WARN-] DNS resolution failed. Setting Ingesta to offline mode\n";
