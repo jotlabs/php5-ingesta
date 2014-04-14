@@ -1,0 +1,12 @@
+{
+    "input": {
+        "type": "Instagram",
+        "clientId": "61fb7c9ea2274bcdbf14b1464a03884a",
+        "taggedRecently": "https://api.instagram.com/v1/tags/ashtanga/media/recent?client_id={clientId}",
+        "tag": "https://api.instagram.com/v1/tags/ashtanga?client_id={clientId}",
+        "offlineError": "file_get_contents(): php_network_getaddresses: getaddrinfo failed: Temporary failure in name resolution",
+        "xmlrpcError": "ErrorException: stream_socket_client(): php_network_getaddresses: getaddrinfo failed: Temporary failure in name resolution"
+    },
+    "processing": {},
+    "output": {}
+}
