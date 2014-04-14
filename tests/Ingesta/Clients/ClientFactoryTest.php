@@ -11,6 +11,7 @@ class ClientFactoryTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->factory = ClientFactory::getInstance();
+        $this->factory->setTestMode(true);
     }
 
 
@@ -22,12 +23,12 @@ class ClientFactoryTest extends PHPUnit_Framework_TestCase
     }
 
 
-    public function testGetHttpReturnsHttpClient()
+    public function testGetHttpReturnsMockHttpClient()
     {
         $client = $this->factory->getHttpClient(null);
         $this->assertNotNull($client);
         $this->assertTrue(is_a($client, 'Ingesta\Clients\Http'));
-        $this->assertTrue(is_a($client, 'Ingesta\Clients\Http\HttpBase'));
+        $this->assertTrue(is_a($client, 'Ingesta\Clients\Http\MockHttp'));
     }
 
     public function testGetCachedHttpReturnsCacheHttpClient()
