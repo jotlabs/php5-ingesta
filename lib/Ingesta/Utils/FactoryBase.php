@@ -12,9 +12,15 @@ class FactoryBase
 
         if (!array_key_exists($className, self::$INSTANCES)) {
             $class = new $className();
+            $class->init();
             self::$INSTANCES[$className] = $class;
         }
 
         return self::$INSTANCES[$className];
+    }
+
+
+    protected function init()
+    {
     }
 }
