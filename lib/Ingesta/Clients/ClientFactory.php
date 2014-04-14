@@ -30,7 +30,7 @@ class ClientFactory extends FactoryBase
     }
 
 
-    public function getHttpClient($clientType)
+    public function getHttpClient($clientType = null)
     {
         $client = $this->getBaseHttpClient();
 
