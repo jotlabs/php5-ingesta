@@ -31,7 +31,7 @@ class ClientFactory extends FactoryBase
 
     public function getHttpClient($clientType)
     {
-        $client = new HttpBase();
+        $client = $this->getBaseHttpClient();
 
         switch ($clientType) {
             case self::CACHE_HTTP_CLIENT:
@@ -50,6 +50,22 @@ class ClientFactory extends FactoryBase
     {
         $client = null;
         return $client;
+    }
+
+
+    protected function getBaseHttpClient()
+    {
+        $client = null;
+
+        if (!$this->isOfflineMode && $this->isOnline && !$this->isTestMode) {
+            $httpClient = new HttpBase();
+
+        } else {
+            $httpClient = new MockHttp();
+
+        }
+
+        return $httpClient;
     }
 
 
