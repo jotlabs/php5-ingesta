@@ -1,6 +1,8 @@
 <?php
 namespace Ingesta\Services\Instagram;
 
+use Ingesta\Services\Instagram\Wrappers\PaginatedResults;
+
 class Instagram
 {
     const RECENT_TAG_ENDPOINT = 'https://api.instagram.com/v1/tags/{tag}/media/recent?client_id={clientId}';
@@ -23,7 +25,7 @@ class Instagram
     }
 
 
-    public function getRecentTag($tag)
+    public function getRecentByTag($tag)
     {
         $url = $this->expandUrlTemplate(
             self::RECENT_TAG_ENDPOINT,
@@ -34,9 +36,7 @@ class Instagram
         );
         //echo "Requesting: {$url}\n";
         $response = $this->getJson($url);
-
-        // TODO: wrap in a Model wrapper
-        return $response;
+        return new PaginatedResults($response);
     }
 
 
