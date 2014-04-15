@@ -32,8 +32,27 @@ class InstagramTest extends PHPUnit_Framework_TestCase
 
     public function testRecentTagReturnsObjectResponse()
     {
-        $recentTags = $this->client->getRecentTag('mattdamon');
-        $this->assertNotNull($recentTags);
+        $recentMedia = $this->client->getRecentByTag('mattdamon');
+        $this->assertNotNull($recentMedia);
+        $this->assertTrue(is_a($recentMedia, 'Ingesta\Services\Instagram\Wrappers\PaginatedResults'));
+        $this->assertTrue(is_a($recentMedia, 'IteratorAggregate'));
+
+        foreach ($recentMedia as $media) {
+            $this->assertNotNull($media);
+            $this->assertTrue(is_a($media, 'Ingesta\Services\Instagram\Wrappers\MediaResult'));
+
+            $this->assertNotNull($media->getId());
+            $this->assertNotNull($media->getLink());
+            $this->assertNotNull($media->getTitle());
+            $this->assertNotNull($media->getPublished());
+            $this->assertNotNull($media->getStandardImage());
+
+            $author = $media->getAuthor();
+            $this->assertNotNull($author);
+
+            $this->assertTrue(is_integer($media->getLikeCount()));
+            $this->assertTrue(is_integer($media->getCommentCount()));
+        }
     }
 
 
