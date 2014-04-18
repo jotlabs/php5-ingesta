@@ -9,10 +9,15 @@ class InstagramFactory extends FactoryBase
 {
 
 
-    public function getInstagramClient()
+    public function getInstagramClient($clientId)
     {
         $httpClient  = $this->getHttpClient();
         $urlTemplate = $this->getUrlTemplate();
+
+        $client = new Instagram($httpClient, $urlTemplate);
+        $client->setApiClientId($clientId);
+
+        return $client;
     }
 
 
