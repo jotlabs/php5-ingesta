@@ -1,9 +1,10 @@
 <?php
-namespace Ingesta\Clients\XmlRpc;
+namespace Ingesta\Integration;
 
 use PHPUnit_Framework_TestCase;
+use Ingesta\Clients\XmlRpc\ZendXmlRpcClient;
 
-class ZendXmlRpcClientTest extends PHPUnit_Framework_TestCase
+class ZendXmlRpcClientIntegration extends PHPUnit_Framework_TestCase
 {
     const API_ENDPOINT = 'http://techcrunch.com/xmlrpc.php';
 
