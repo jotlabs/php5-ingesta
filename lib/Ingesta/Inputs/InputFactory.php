@@ -3,10 +3,12 @@ namespace Ingesta\Inputs;
 
 use Ingesta\Services\Wordpress\WordpressFactory;
 use Ingesta\Services\Wordpress\Credentials;
+use Ingesta\Services\Instagram\InstagramFactory;
 
 class InputFactory
 {
     const WORDPRESS_API = 'wordpress';
+    const INSTAGRAM_API = 'instagram';
 
     protected static $INSTANCE;
 
@@ -42,6 +44,8 @@ class InputFactory
             case self::WORDPRESS_API:
                 $service = $this->getWordpressApi($input);
                 break;
+            case self::INSTAGRAM_API:
+                $service = $this->getInstagramApi($input);
         }
 
         return $service;
@@ -54,5 +58,13 @@ class InputFactory
         $credentials = new Credentials($input->username, $input->password);
         $wordpress   = $factory->getWordpressClient($input->url, $credentials);
         return $wordpress;
+    }
+
+
+    protected function getInstagramApi($input)
+    {
+        $factory     = InstagramFactory::getInstance();
+        $instagram   = $factory->getInstagramClient($input->clientId);
+        return $instagram;
     }
 }
