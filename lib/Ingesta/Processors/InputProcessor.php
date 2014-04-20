@@ -27,7 +27,7 @@ class InputProcessor implements Processor
     {
         $processed = null;
 
-        if (is_array($input)) {
+        if (is_array($input) || is_a($input, 'IteratorAggregate')) {
             $processed = $this->processList($input);
         } else {
             $processed = $this->processItem($input);
