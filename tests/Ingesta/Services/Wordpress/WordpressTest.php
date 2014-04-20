@@ -32,6 +32,7 @@ class WordpressTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(class_exists('Ingesta\Services\Wordpress\Wordpress'));
         $this->assertNotNull($this->wordpress);
         $this->assertTrue(is_a($this->wordpress, 'Ingesta\Services\Wordpress\Wordpress'));
+        $this->assertTrue(is_a($this->wordpress, 'Ingesta\Inputs\InputGetter'));
     }
 
 

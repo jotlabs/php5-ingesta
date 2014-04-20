@@ -27,6 +27,7 @@ class InstagramTest extends PHPUnit_Framework_TestCase
         $this->assertTrue(class_exists('Ingesta\Services\Instagram\Instagram'));
         $this->assertNotNull($this->client);
         $this->assertTrue(is_a($this->client, 'Ingesta\Services\Instagram\Instagram'));
+        $this->assertTrue(is_a($this->client, 'Ingesta\Inputs\InputGetter'));
     }
 
 
