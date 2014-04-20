@@ -39,7 +39,6 @@ class Ingesta
             $recipe = $this->loadRecipe($recipeName);
 
             if ($recipe) {
-                $recipe = $this->addIncomingArgs($recipe);
                 $state  = $this->loadState($recipeName);
 
                 if (isset($state->lastRun)) {
@@ -114,24 +113,51 @@ class Ingesta
         $filePath = self::RECIPE_DIR . '/' . $recipeName . '.json';
 
         if (is_file($filePath)) {
-            $recipe = json_decode(file_get_contents($filePath));
+            $content = file_get_contents($filePath);
+            $content = $this->processTokens($content);
+            $recipe  = json_decode($content);
         }
 
         return $recipe;
     }
 
 
-    protected function addIncomingArgs($recipe)
+    protected function processTokens($content)
     {
-        $attrs = array_keys((array) $recipe->input);
-        $args  = $this->parseArgs($attrs);
-        print_r($args);
+        if (preg_match_all("/\{(\w+)\}/", $content, $matches)) {
+            $tokens = array_unique($matches[1]);
+            //echo "Tokens found:\n";
+            print_r($tokens);
 
-        foreach ($args as $argName => $argValue) {
-            $recipe->input->{$argName} = $argValue;
+            $args   = $this->parseArgs($tokens);
+            //echo "Found args for Tokens:\n";
+            print_r($args);
+
+
+            if (count($tokens) !== count($args)) {
+                $argTokens = array_keys($args);
+                $missing   = array_diff($tokens, $argTokens);
+
+                echo "[-WARN-] Replacement tokens missing: ", implode(', ', $missing), "\n";
+            }
+
+            $match   = array_keys($args);
+            $match   = array_map(
+                function ($item) {
+                    return '/\{' . $item . '\}/';
+                },
+                $match
+            );
+            $replace = array_values($args);
+
+            //print_r($match);
+            //print_r($replace);
+
+            $content = preg_replace($match, $replace, $content);
+            //print_r($content);
+
         }
-
-        return $recipe;
+        return $content;
     }
 
 
