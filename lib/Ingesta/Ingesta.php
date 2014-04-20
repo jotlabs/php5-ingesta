@@ -126,13 +126,7 @@ class Ingesta
     {
         if (preg_match_all("/\{(\w+)\}/", $content, $matches)) {
             $tokens = array_unique($matches[1]);
-            //echo "Tokens found:\n";
-            print_r($tokens);
-
             $args   = $this->parseArgs($tokens);
-            //echo "Found args for Tokens:\n";
-            print_r($args);
-
 
             if (count($tokens) !== count($args)) {
                 $argTokens = array_keys($args);
@@ -150,12 +144,7 @@ class Ingesta
             );
             $replace = array_values($args);
 
-            //print_r($match);
-            //print_r($replace);
-
             $content = preg_replace($match, $replace, $content);
-            //print_r($content);
-
         }
         return $content;
     }
