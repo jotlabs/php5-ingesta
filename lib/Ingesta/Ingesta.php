@@ -35,10 +35,12 @@ class Ingesta
         //print_r($args);
         if (isset($args['recipe'])) {
             $recipeName = $args['recipe'];
+
             $recipe = $this->loadRecipe($recipeName);
 
             if ($recipe) {
-                $state = $this->loadState($recipeName);
+                $recipe = $this->addIncomingArgs($recipe);
+                $state  = $this->loadState($recipeName);
 
                 if (isset($state->lastRun)) {
                     echo "[-INFO-] Running recipe '\033[0;32m{$recipeName}\033[0m'. Last run: {$state->lastRun}\n";
@@ -119,6 +121,20 @@ class Ingesta
     }
 
 
+    protected function addIncomingArgs($recipe)
+    {
+        $attrs = array_keys((array) $recipe->input);
+        $args  = $this->parseArgs($attrs);
+        print_r($args);
+
+        foreach ($args as $argName => $argValue) {
+            $recipe->input->{$argName} = $argValue;
+        }
+
+        return $recipe;
+    }
+
+
     protected function loadState($recipeName)
     {
         $state    = null;
@@ -152,6 +168,24 @@ class Ingesta
         $jsonDoc  = json_encode($state);
         $response = file_put_contents($filePath, $jsonDoc);
         return $response;
+    }
+
+
+    protected function parseArgs($attrs)
+    {
+        $attrArgs = array_map(
+            function ($attr) {
+                return "{$attr}::";
+            },
+            $attrs
+        );
+
+        $args = getopt(
+            self::$shortCmdOptions,
+            $attrArgs
+        );
+
+        return $args;
     }
 
 
