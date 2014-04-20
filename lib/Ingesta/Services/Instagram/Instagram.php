@@ -1,9 +1,10 @@
 <?php
 namespace Ingesta\Services\Instagram;
 
+use Ingesta\Inputs\InputGetter;
 use Ingesta\Services\Instagram\Wrappers\PaginatedResults;
 
-class Instagram
+class Instagram implements InputGetter
 {
     const RECENT_TAG_ENDPOINT = 'https://api.instagram.com/v1/tags/{tag}/media/recent?client_id={clientId}';
 
