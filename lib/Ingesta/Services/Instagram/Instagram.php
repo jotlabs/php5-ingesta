@@ -7,6 +7,8 @@ class Instagram
 {
     const RECENT_TAG_ENDPOINT = 'https://api.instagram.com/v1/tags/{tag}/media/recent?client_id={clientId}';
 
+    const METHOD_GET_RECENT_TAGS = 'getTagRecent';
+
     protected $httpClient;
     protected $urlTemplate;
 
@@ -22,6 +24,21 @@ class Instagram
     public function setApiClientId($apiClientId)
     {
         $this->apiClientId = $apiClientId;
+    }
+
+
+    public function getInput($inputArgs)
+    {
+        $input  = null;
+        $method = $inputArgs->method;
+
+        switch ($method) {
+            case self::METHOD_GET_RECENT_TAGS:
+                $input = $this->getRecentByTag($inputArgs->tag);
+                break;
+        }
+
+        return $input;
     }
 
 
