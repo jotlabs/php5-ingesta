@@ -42,10 +42,10 @@ class InstagramTest extends PHPUnit_Framework_TestCase
             $this->assertNotNull($media);
             $this->assertTrue(is_a($media, 'Ingesta\Services\Instagram\Wrappers\MediaResult'));
 
-            $this->assertNotNull($media->getId());
+            $this->assertNotNull($media->getGuid());
             $this->assertNotNull($media->getLink());
             $this->assertNotNull($media->getTitle());
-            $this->assertNotNull($media->getPublished());
+            $this->assertNotNull($media->getPublishedDate());
             $this->assertNotNull($media->getStandardImage());
 
             $author = $media->getAuthor();
