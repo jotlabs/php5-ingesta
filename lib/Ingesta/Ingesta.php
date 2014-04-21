@@ -18,13 +18,23 @@ class Ingesta
     );
 
 
+    protected $isShell = false;
+
+
     public static function run()
     {
         echo 'Ingesta v', self::VERSION, "\n";
-        $self     = new Ingesta();
+        $self = new Ingesta();
+        $self->setIsShell(true);
         $cmdArgs  = $self->getCmdArgs();
         $response = $self->execute($cmdArgs);
         return $response;
+    }
+
+
+    protected function setIsShell($isShell)
+    {
+        $this->isShell = $isShell;
     }
 
 
@@ -58,6 +68,12 @@ class Ingesta
         }
 
         return $response;
+    }
+
+
+    public function runRecipe($recipe, $state)
+    {
+        return $this->executeRecipe($recipe, $state);
     }
 
 
@@ -98,9 +114,8 @@ class Ingesta
             $writer        = $outputFactory->getWriter($outputConfig);
             $response      = $writer->write($input);
 
-        } else {
+        } elseif ($this->isShell) {
             echo "[-INFO-] No output to write.\n";
-
         }
 
         return $response;
@@ -132,7 +147,9 @@ class Ingesta
                 $argTokens = array_keys($args);
                 $missing   = array_diff($tokens, $argTokens);
 
-                echo "[-WARN-] Replacement tokens missing: ", implode(', ', $missing), "\n";
+                if ($this->isShell) {
+                    echo "[-WARN-] Replacement tokens missing: ", implode(', ', $missing), "\n";
+                }
             }
 
             $match   = array_keys($args);
