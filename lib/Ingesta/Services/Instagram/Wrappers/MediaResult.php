@@ -12,9 +12,15 @@ class MediaResult
     }
 
 
-    public function getId()
+    public function getGuid()
     {
         return $this->document->id;
+    }
+
+
+    public function getSlug()
+    {
+        return $this->getGuid();
     }
 
 
@@ -31,9 +37,22 @@ class MediaResult
     }
 
 
-    public function getPublished()
+    public function getPublishedDate()
     {
         return date('c', $this->document->created_time);
+    }
+
+
+    public function getModifiedDate()
+    {
+        return $this->getPublishedDate();
+    }
+
+
+    public function getContent()
+    {
+        $image = $this->getStandardImage();
+        return "<img src=\"{$image->url}\" width=\"{$image->width}\" height=\"{$image->height}\">";
     }
 
 
@@ -79,6 +98,12 @@ class MediaResult
     public function getThumbnailImage()
     {
         return $this->document->images->thumbnail;
+    }
+
+
+    public function getCategories()
+    {
+        return array();
     }
 
 
