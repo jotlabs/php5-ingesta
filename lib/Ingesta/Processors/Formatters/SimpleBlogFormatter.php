@@ -34,10 +34,12 @@ class SimpleBlogFormatter implements Processor
             'tags'       => $this->processTerms($input->getTags()),
         );
 
-        $meta = $this->getYoastData($input);
+        if (is_a($input, 'Ingesta\Services\Wordpress\Wrappers\Post')) {
+            $meta = $this->getYoastData($input);
 
-        if (is_array($meta)) {
-            $blog = array_merge($blog, $meta);
+            if (is_array($meta)) {
+                $blog = array_merge($blog, $meta);
+            }
         }
 
         return (object) $blog;
@@ -50,14 +52,22 @@ class SimpleBlogFormatter implements Processor
 
         if ($termList) {
             foreach ($termList as $termItem) {
-                $term = array(
-                    'termId' => $termItem->getTermId(),
-                    'name' => $termItem->getName(),
-                    'slug' => $termItem->getSlug(),
-                    'description' => $termItem->getDescription(),
-                    'taxonomy'    => $termItem->getTaxonomy(),
-                    'total' => $termItem->getTotal()
-                );
+                if (is_a($termItem, 'Ingesta\Services\Wordpress\Wrappers\Term')) {
+                    $term = array(
+                        'termId'      => $termItem->getTermId(),
+                        'name'        => $termItem->getName(),
+                        'slug'        => $termItem->getSlug(),
+                        'description' => $termItem->getDescription(),
+                        'taxonomy'    => $termItem->getTaxonomy(),
+                        'total'       => $termItem->getTotal()
+                    );
+                } elseif (is_string($termItem)) {
+                    $term = array(
+                        'name'     => $termItem,
+                        'slug'     => $termItem,
+                        'taxonomy' => 'tag'
+                    );
+                }
 
                 $terms[] = $term;
             }
