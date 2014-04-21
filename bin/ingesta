@@ -1,6 +1,7 @@
 #!/usr/bin/env php
 <?php
-(@include_once __DIR__ . '/../vendor/autoload.php') || @include_once __DIR__ . '/../../../autoload.php';
+include_once __DIR__ . '/../etc/base-constants.php';
+include_once INGESTA_ROOT . '/etc/base-includes.php';
 
 use Ingesta\Ingesta;
 
