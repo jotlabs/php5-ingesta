@@ -27,7 +27,13 @@ class MediaResult
     public function getTitle()
     {
         // TODO: get a Wrapped caption object
-        return $this->document->caption->text;
+        $caption = '';
+
+        if (isset($this->document->caption->text)) {
+            $caption = $this->document->caption->text;
+        }
+
+        return $caption;
     }
 
 
