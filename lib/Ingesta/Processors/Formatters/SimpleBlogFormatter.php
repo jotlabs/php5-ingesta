@@ -34,12 +34,17 @@ class SimpleBlogFormatter implements Processor
             'tags'       => $this->processTerms($input->getTags()),
         );
 
+        # TODO: refactor into a Service-specific implementation of an interface
         if (is_a($input, 'Ingesta\Services\Wordpress\Wrappers\Post')) {
             $meta = $this->getYoastData($input);
 
             if (is_array($meta)) {
                 $blog = array_merge($blog, $meta);
             }
+        } elseif (is_a($input, 'Ingesta\Services\Instagram\Wrappers\MediaResult')) {
+            $blog['likeCount'] = $input->getLikeCount();
+            $blog['author']    = $input->getAuthor();
+            //$blog['tags']      = $input->getTags();
         }
 
         return (object) $blog;
