@@ -43,8 +43,9 @@ class Instagram implements InputGetter
     }
 
 
-    public function getRecentByTag($tag)
+    public function getRecentByTag($tag, $followNextPage = true)
     {
+        $pageCount = 1;
         $url = $this->expandUrlTemplate(
             self::RECENT_TAG_ENDPOINT,
             array(
@@ -52,9 +53,21 @@ class Instagram implements InputGetter
                 'clientId' => $this->apiClientId
             )
         );
-        //echo "Requesting: {$url}\n";
+
+        echo "[-INFO-] Instagram getRecentByTag {$tag}/{$pageCount}: {$url}\n";
         $response = $this->getJson($url);
-        return new PaginatedResults($response);
+        $results  = new PaginatedResults($response);
+
+        $nextPage = $results->getNextPage();
+        while ($nextPage && $followNextPage) {
+            $pageCount++;
+            echo "[-INFO-] Instagram getRecentByTag {$tag}/{$pageCount}: {$nextPage}\n";
+            $response = $this->getJson($nextPage);
+            $results->addNextPage($response);
+            $nextPage = $results->getNextPage();
+        }
+
+        return $results;
     }
 
 
