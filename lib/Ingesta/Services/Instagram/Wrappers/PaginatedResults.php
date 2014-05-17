@@ -17,9 +17,26 @@ class PaginatedResults implements IteratorAggregate
     }
 
 
-    public function getNextUrl()
+    public function addNextPage($document)
     {
-        return $this->document->pagination->next_url;
+        if ($document->meta->code === 200) {
+            $this->document->pagination = $document->pagination;
+            $this->document->data = array_merge($this->document->data, $document->data);
+        } else {
+            $this->document->pagination->next_url = false;
+            $this->document->pagination->next_max_tag_id = false;
+        }
+    }
+
+
+    public function getNextPage()
+    {
+        $nextUrl = false;
+        if (!empty($this->document->pagination->next_url)) {
+            $nextUrl = $this->document->pagination->next_url;
+        }
+
+        return $nextUrl;
     }
 
 
