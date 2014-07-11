@@ -75,6 +75,24 @@ class WordpressTest extends PHPUnit_Framework_TestCase
     }
 
 
+    public function testGetUserReturnsUsers()
+    {
+        $users = $this->wordpress->getUsers();
+        $this->assertNotNull($users);
+        $this->assertTrue(is_array($users));
+        $this->assertEquals(3, count($users));
+
+        $user = $users[0];
+        $this->assertNotNull($user);
+        $this->assertTrue(is_a($user, 'Ingesta\Services\Wordpress\Wrappers\User'));
+
+        $this->assertNotNull($user->getUserName());
+        $this->assertNotNull($user->getFirstName());
+        $this->assertNotNull($user->getLastName());
+        $this->assertNotNull($user->getRegisteredDate());
+    }
+
+
     protected function setUpMockClient()
     {
         $mockClient = new MockXmlRpcClient('unit-test');
@@ -91,6 +109,11 @@ class WordpressTest extends PHPUnit_Framework_TestCase
             $this->getWpGetPostResponse()
         );
 
+        $mockClient->addMethodResponse(
+            'wp.getUsers',
+            $this->getWpGetUsersResponse()
+        );
+
         return $mockClient;
     }
 
@@ -105,6 +128,13 @@ class WordpressTest extends PHPUnit_Framework_TestCase
     protected function getWpGetPostResponse()
     {
         include STUB_DIR . '/xmlrpc-responses/wp-getPost.php';
+        return $response;
+    }
+
+
+    protected function getWpGetUsersResponse()
+    {
+        include STUB_DIR . '/xmlrpc-responses/wp-getUsers.php';
         return $response;
     }
 }

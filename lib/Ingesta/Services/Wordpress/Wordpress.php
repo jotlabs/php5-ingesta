@@ -3,12 +3,14 @@ namespace Ingesta\Services\Wordpress;
 
 use Ingesta\Inputs\InputGetter;
 use Ingesta\Services\Wordpress\Wrappers\Post;
+use Ingesta\Services\Wordpress\Wrappers\User;
 
 class Wordpress implements InputGetter
 {
     const METHOD_SAY_HELLO = 'demo.sayHello';
     const METHOD_GET_POSTS = 'wp.getPosts';
     const METHOD_GET_POST  = 'wp.getPost';
+    const METHOD_GET_USERS = 'wp.getUsers';
 
     protected $client;
     protected $credentials;
@@ -103,5 +105,36 @@ class Wordpress implements InputGetter
 
         }
         return $post;
+    }
+
+
+    public function getUsers()
+    {
+        $users = null;
+
+        if ($this->credentials) {
+            $response = $this->client->callMethod(
+                self::METHOD_GET_USERS,
+                array(
+                    1,
+                    $this->credentials->getUsername(),
+                    $this->credentials->getPassword()
+                )
+            );
+
+            if (is_array($response) && count($response)) {
+                $users = array();
+
+                foreach ($response as $userData) {
+                    $user = new User($userData);
+                    $users[] = $user;
+                }
+            }
+
+        } else {
+            throw new AuthenticationRequiredException("Wordpress endpoint 'wp.getUsers' requires authentication.");
+
+        }
+        return $users;
     }
 }
