@@ -35,13 +35,20 @@ class ProcessorFactory
         $processor = new InputProcessor();
 
         if (!empty($processingRules->filter)) {
-            $filter = $this->getFilter($processingRules->filter, $state);
-            if ($filter) {
-                echo "[-INFO-] Adding filter '{$processingRules->filter}'\n";
-                $processor->addFilter($filter);
-            } else {
-                echo "\033[1;33m[-WARN-]\033[0m Filter '{$processingRules->filter}' not found.\n";
+            if (!is_array($processingRules->filter)) {
+                $processingRules->filter = array($processingRules->filter);
             }
+
+            foreach ($processingRules->filter as $filterName) {
+                $filter = $this->getFilter($filterName, $state);
+                if ($filter) {
+                    echo "[-INFO-] Adding filter '{$filterName}'\n";
+                    $processor->addFilter($filter);
+                } else {
+                    echo "\033[1;33m[-WARN-]\033[0m Filter '{$filterName}' not found.\n";
+                }
+            }
+
         }
 
         if (!empty($processingRules->format)) {
