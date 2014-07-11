@@ -63,8 +63,13 @@ class Instagram implements InputGetter
             $pageCount++;
             echo "[-INFO-] Instagram getRecentByTag {$tag}/{$pageCount}: {$nextPage}\n";
             $response = $this->getJson($nextPage);
-            $results->addNextPage($response);
-            $nextPage = $results->getNextPage();
+
+            if ($response) {
+                $results->addNextPage($response);
+                $nextPage = $results->getNextPage();
+            } else {
+                $nextPage = null;
+            }
         }
 
         return $results;
