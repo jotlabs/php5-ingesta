@@ -4,7 +4,8 @@ namespace Ingesta\Services\Wordpress\Wrappers;
 
 class Post
 {
-    const STATUS_PUBLISHED = 'published';
+    const STATUS_PUBLISHED = 'publish';
+    const STATUS_DRAFT     = 'draft';
 
     protected $post;
     protected $categories;
@@ -87,6 +88,12 @@ class Post
     public function isPublished()
     {
         return ($this->post->post_status === self::STATUS_PUBLISHED);
+    }
+
+
+    public function isDraft()
+    {
+        return ($this->post->post_status === self::STATUS_DRAFT);
     }
 
 
