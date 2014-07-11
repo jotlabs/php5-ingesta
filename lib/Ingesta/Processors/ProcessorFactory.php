@@ -2,6 +2,7 @@
 namespace Ingesta\Processors;
 
 use Ingesta\Processors\Filters\DateFilter;
+use Ingesta\Processors\Filters\DraftFilter;
 use Ingesta\Processors\Adapters\MethodCallAdapter;
 use Ingesta\Processors\Formatters\SimpleBlogFormatter;
 use Ingesta\Processors\Formatters\WordpressContentFormatter;
@@ -9,6 +10,7 @@ use Ingesta\Processors\Formatters\WordpressContentFormatter;
 class ProcessorFactory
 {
     const FILTER_UPDATED_SINCE_LAST_CHECK = 'updatedSinceLastCheck';
+    const FILTER_IS_PUBLISHED             = 'isPublished';
     const FORMAT_SIMPLE_BLOG_OUTPUT       = 'SimpleBlogFormat';
     const FORMAT_WORDPRESS_CONTENT        = 'WordpressContentFormat';
 
@@ -83,6 +85,9 @@ class ProcessorFactory
                         empty($state->lastRun) ? 0 : $state->lastRun
                     )
                 );
+                break;
+            case self::FILTER_IS_PUBLISHED:
+                $filter = new DraftFilter();
                 break;
         }
 
