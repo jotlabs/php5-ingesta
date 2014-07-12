@@ -93,6 +93,7 @@ class WordpressTest extends PHPUnit_Framework_TestCase
 
         $this->assertNotNull($user->getId());
         $this->assertNotNull($user->getUserName());
+        $this->assertNotNull($user->getSlug());
         $this->assertNotNull($user->getFirstName());
         $this->assertNotNull($user->getLastName());
         $this->assertNotNull($user->getRegisteredDate());
