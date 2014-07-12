@@ -12,6 +12,11 @@ class User
     }
 
 
+    public function getId()
+    {
+        return $this->user->user_id;
+    }
+
     public function getUserName()
     {
         return $this->user->username;
