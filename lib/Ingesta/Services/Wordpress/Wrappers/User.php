@@ -12,10 +12,24 @@ class User
     }
 
 
+    public function data()
+    {
+        return array(
+            'username'   => $this->getUserName(),
+            'firstName'  => $this->getFirstName(),
+            'lastName'   => $this->getLastName(),
+            'registered' => $this->getRegisteredDate(),
+            'bio'        => $this->getBio(),
+            'roles'      => $this->user->roles
+        );
+    }
+
+
     public function getId()
     {
         return $this->user->user_id;
     }
+
 
     public function getUserName()
     {
