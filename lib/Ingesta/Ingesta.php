@@ -40,7 +40,8 @@ class Ingesta
 
     public function execute($args)
     {
-        $response = false;
+        $response  = false;
+        $startTime = date('c');
 
         //print_r($args);
         if (isset($args['recipe'])) {
@@ -59,7 +60,7 @@ class Ingesta
 
                 $respons = $this->executeRecipe($recipe, $state);
 
-                $state->lastRun = date('c');
+                $state->lastRun = $startTime;
                 $this->saveState($recipeName, $state);
 
             } else {
