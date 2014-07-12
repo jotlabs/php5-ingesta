@@ -93,6 +93,15 @@ class WordpressTest extends PHPUnit_Framework_TestCase
     }
 
 
+    public function testGetUserByIdReturnsUser()
+    {
+        $user = $this->wordpress->getUser(1);
+        $this->assertNotNull($user);
+        $this->assertTrue(is_a($user, 'Ingesta\Services\Wordpress\Wrappers\User'));
+        $this->assertNotNull($user->getUserName());
+    }
+
+
     protected function setUpMockClient()
     {
         $mockClient = new MockXmlRpcClient('unit-test');
