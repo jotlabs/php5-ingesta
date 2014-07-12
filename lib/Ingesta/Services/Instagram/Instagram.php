@@ -43,7 +43,7 @@ class Instagram implements InputGetter
     }
 
 
-    public function getRecentByTag($tag, $followNextPage = true)
+    public function getRecentByTag($tag, $followNextPage = true, $maxPages = 200)
     {
         $pageCount = 1;
         $url = $this->expandUrlTemplate(
@@ -68,7 +68,10 @@ class Instagram implements InputGetter
 
             if ($response) {
                 $results->addNextPage($response);
-                $nextPage = $results->getNextPage();
+
+                if ($pageCount <= $maxPages) {
+                    $nextPage = $results->getNextPage();
+                }
             }
         }
 
