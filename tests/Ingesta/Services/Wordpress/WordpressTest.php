@@ -59,6 +59,11 @@ class WordpressTest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($post->getTitle());
         $this->assertNotNull($post->getLink());
         $this->assertNotNull($post->getContent());
+
+        $this->assertNotNull($post->getAuthor());
+
+        $author = $post->getAuthor();
+        $this->assertTrue(is_a($author, 'Ingesta\Services\Wordpress\Wrappers\User'));
     }
 
 
@@ -86,6 +91,7 @@ class WordpressTest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($user);
         $this->assertTrue(is_a($user, 'Ingesta\Services\Wordpress\Wrappers\User'));
 
+        $this->assertNotNull($user->getId());
         $this->assertNotNull($user->getUserName());
         $this->assertNotNull($user->getFirstName());
         $this->assertNotNull($user->getLastName());
