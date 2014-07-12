@@ -54,21 +54,21 @@ class Instagram implements InputGetter
             )
         );
 
-        //echo "[-INFO-] Instagram getRecentByTag {$tag}/{$pageCount}: {$url}\n";
+        echo "[-INFO-] Instagram getRecentByTag {$tag}/{$pageCount}: {$url}\n";
         $response = $this->getJson($url);
         $results  = new PaginatedResults($response);
 
         $nextPage = $results->getNextPage();
         while ($nextPage && $followNextPage) {
             $pageCount++;
-            //echo "[-INFO-] Instagram getRecentByTag {$tag}/{$pageCount}: {$nextPage}\n";
+            echo "[-INFO-] Instagram getRecentByTag {$tag}/{$pageCount}: {$nextPage}\n";
             $response = $this->getJson($nextPage);
+
+            $nextPage = null;
 
             if ($response) {
                 $results->addNextPage($response);
                 $nextPage = $results->getNextPage();
-            } else {
-                $nextPage = null;
             }
         }
 
