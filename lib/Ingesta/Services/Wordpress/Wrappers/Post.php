@@ -109,6 +109,12 @@ class Post
     }
 
 
+    public function getAuthor()
+    {
+        return $this->post->author;
+    }
+
+
     public function getCategories()
     {
         if (!$this->categories) {
