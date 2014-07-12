@@ -36,6 +36,7 @@ class SimpleBlogFormatter implements Processor
 
         # TODO: refactor into a Service-specific implementation of an interface
         if (is_a($input, 'Ingesta\Services\Wordpress\Wrappers\Post')) {
+            $blog['author'] = $input->getAuthor()->data();
             $meta = $this->getYoastData($input);
 
             if (is_array($meta)) {
