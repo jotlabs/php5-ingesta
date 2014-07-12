@@ -14,11 +14,13 @@ class Wordpress implements InputGetter
 
     protected $client;
     protected $credentials;
+    protected $authors;
 
 
     public function __construct($client)
     {
         $this->client = $client;
+        $this->authors = array();
     }
 
 
@@ -80,6 +82,19 @@ class Wordpress implements InputGetter
 
         }
         return $posts;
+    }
+
+
+    public function getUser($userId)
+    {
+        if (empty($this->users)) {
+            $users = $this->getUsers();
+            foreach ($users as $user) {
+                $this->users[$user->getId()] = $user;
+            }
+        }
+
+        return $this->users[$userId];
     }
 
 
