@@ -72,6 +72,7 @@ class Wordpress implements InputGetter
                 $posts = array();
 
                 foreach ($response as $postData) {
+                    $postData['author'] = $this->getUser($postData['post_author']);
                     $post = new Post($postData);
                     $posts[] = $post;
                 }
