@@ -16,6 +16,7 @@ class User
     {
         return array(
             'username'   => $this->getUserName(),
+            'slug'       => $this->getSlug(),
             'firstName'  => $this->getFirstName(),
             'lastName'   => $this->getLastName(),
             'registered' => $this->getRegisteredDate(),
@@ -34,6 +35,12 @@ class User
     public function getUserName()
     {
         return $this->user->username;
+    }
+
+
+    public function getSlug()
+    {
+        return $this->user->nicename;
     }
 
 
