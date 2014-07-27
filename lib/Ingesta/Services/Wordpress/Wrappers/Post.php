@@ -33,13 +33,15 @@ class Post
 
     public function getPublishedDate()
     {
-        return $this->post->post_date;
+        $postDate = $this->reformatDate($this->post->post_date);
+        return $postDate;
     }
 
 
     public function getModifiedDate()
     {
-        return $this->post->post_modified;
+        $postModified = $this->reformatDate($this->post->post_modified);
+        return $postModified;
     }
 
 
@@ -160,6 +162,12 @@ class Post
                     break;
             }
         }
+    }
 
+
+    protected function reformatDate($wpDate)
+    {
+        $newDate = preg_replace('/^(\d{4})(\d{2})(\d{2})T(.+)$/', '${1}-${2}-${3}T${4}', $wpDate);
+        return $newDate;
     }
 }
