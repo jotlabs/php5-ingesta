@@ -168,6 +168,6 @@ class Post
     protected function reformatDate($wpDate)
     {
         $newDate = preg_replace('/^(\d{4})(\d{2})(\d{2})T(.+)$/', '${1}-${2}-${3}T${4}', $wpDate);
-        return $newDate;
+        return ($newDate) ? $newDate : $wpDate;
     }
 }
