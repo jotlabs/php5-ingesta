@@ -64,6 +64,10 @@ class WordpressTest extends PHPUnit_Framework_TestCase
 
         $author = $post->getAuthor();
         $this->assertTrue(is_a($author, 'Ingesta\Services\Wordpress\Wrappers\User'));
+
+        // Test published/updated date formats
+        $this->assertTrue(preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/', $post->getPublishedDate()) === 1);
+        $this->assertTrue(preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/', $post->getModifiedDate()) === 1);
     }
 
 
@@ -77,6 +81,10 @@ class WordpressTest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($post->getTitle());
         $this->assertNotNull($post->getLink());
         $this->assertNotNull($post->getContent());
+
+        // Test published/updated date formats
+        $this->assertTrue(preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/', $post->getPublishedDate()) === 1);
+        $this->assertTrue(preg_match('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/', $post->getModifiedDate()) === 1);
     }
 
 
