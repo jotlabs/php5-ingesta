@@ -27,12 +27,14 @@ class WordpressContentFormatter implements Processor
                     $buffer[] = "<div class=\"media-caption\">{$matches[2]}</div>";
                 } elseif (strpos($line, '<p') === 0) {
                     // Do not wrap in paragraph tags
+                    $buffer[] = $line;
                 } else {
                     $buffer[] = "<p>{$line}</p>";
                 }
             }
         }
 
-        return implode("\n", $buffer);
+        $output = implode("\n", $buffer);
+        return $output;
     }
 }
