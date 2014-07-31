@@ -21,6 +21,7 @@ class InstagramFactory extends FactoryBase
     }
 
 
+    // TODO: Remove this - available in Factory Base
     protected function getHttpClient()
     {
         $factory    = ClientFactory::getInstance();
@@ -29,6 +30,7 @@ class InstagramFactory extends FactoryBase
     }
 
 
+    // TODO: Remove this - available in Factory Base
     protected function getUrlTemplate()
     {
         $urlTemplate = new UrlTemplate();
