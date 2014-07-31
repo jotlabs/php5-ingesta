@@ -1,6 +1,9 @@
 <?php
 namespace Ingesta\Utils;
 
+use Ingesta\Clients\ClientFactory;
+use Ingesta\Utils\UrlTemplate;
+
 class FactoryBase
 {
     protected static $INSTANCES = array();
@@ -22,5 +25,20 @@ class FactoryBase
 
     protected function init()
     {
+    }
+
+
+    protected function getHttpClient()
+    {
+        $factory    = ClientFactory::getInstance();
+        $httpClient = $factory->getHttpClient();
+        return $httpClient;
+    }
+
+
+    protected function getUrlTemplate()
+    {
+        $urlTemplate = new UrlTemplate();
+        return $urlTemplate;
     }
 }
