@@ -36,6 +36,34 @@ class StorifyTest extends PHPUnit_Framework_TestCase
 
         //$this->assertNotNull($story->self);
         //$this->assertNotNull($story->content);
+        $this->assertNotNull($story->getStoryId());
+        $this->assertNotNull($story->getTitle());
+        $this->assertNotNull($story->getSlug());
+        $this->assertNotNull($story->getStatus());
+
+        $this->assertNotNull($story->getPermalink());
+        $this->assertNotNull($story->getDescription());
+        $this->assertNotNull($story->getThumbnail());
+        $this->assertNotNull($story->getCreatedDate());
+        $this->assertNotNull($story->getModifiedDate());
+        $this->assertNotNull($story->getPublishedDate());
+        $this->assertNotNull($story->getTags());
+
+        $this->assertNotNull($story->getAuthor());
+        $this->assertNotNull($story->getApiUrl());
+        $this->assertNotNull($story->getContent());
+
+
+        $this->assertTrue($story->isPublished());
+        $this->assertTrue(is_array($story->getTags()));
+        $this->assertTrue(count($story->getTags()) > 0);
+
+        $author = $story->getAuthor();
+        $this->assertNotNull($author->slug);
+        $this->assertNotNull($author->name);
+        $this->assertNotNull($author->bio);
+        $this->assertNotNull($author->image);
+        $this->assertNotNull($author->location);
     }
 
 
