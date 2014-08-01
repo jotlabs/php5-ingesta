@@ -3,14 +3,111 @@ namespace Ingesta\Services\Storify\Wrappers;
 
 class Story
 {
+    const STATUS_PUBLISHED = 'published';
+
     protected $story;
 
 
-    public function __construct($post)
+    public function __construct($story)
     {
-        $this->post = (object) $post;
+        $this->story = (object) $story;
     }
 
 
+    public function getStoryId()
+    {
+        return $this->story->sid;
+    }
 
+
+    public function getTitle()
+    {
+        return $this->story->title;
+    }
+
+
+    public function getSlug()
+    {
+        return $this->story->slug;
+    }
+
+
+    public function getStatus()
+    {
+        return $this->story->status;
+    }
+
+
+    public function isPublished()
+    {
+        return ($this->story->status === self::STATUS_PUBLISHED);
+    }
+
+
+    public function getPermalink()
+    {
+        return $this->story->permalink;
+    }
+
+
+    public function getDescription()
+    {
+        return $this->story->description;
+    }
+
+
+    public function getThumbnail()
+    {
+        return $this->story->thumbnail;
+    }
+
+
+    public function getCreatedDate()
+    {
+        return $this->story->date->created;
+    }
+
+
+    public function getModifiedDate()
+    {
+        return $this->story->date->modified;
+    }
+
+
+    public function getPublishedDate()
+    {
+        return $this->story->date->published;
+    }
+
+
+    public function getTags()
+    {
+        return $this->story->meta->hashtags;
+    }
+
+
+    public function getAuthor()
+    {
+        $author = (object) array(
+            'slug'     => $this->story->author->username,
+            'name'     => $this->story->author->name,
+            'bio'      => $this->story->author->bio,
+            'image'    => $this->story->author->avatar,
+            'location' => $this->story->author->location,
+        );
+
+        return $author;
+    }
+
+
+    public function getApiUrl()
+    {
+        return $this->story->self;
+    }
+
+
+    public function getContent()
+    {
+        return $this->story->content;
+    }
 }
