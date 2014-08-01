@@ -34,14 +34,13 @@ class StorifyTest extends PHPUnit_Framework_TestCase
         $this->assertNotNull($story);
         $this->assertTrue(is_a($story, 'Ingesta\Services\Storify\Wrappers\Story'));
 
-        //$this->assertNotNull($story->self);
-        //$this->assertNotNull($story->content);
         $this->assertNotNull($story->getStoryId());
+        $this->assertNotNull($story->getGuid());
         $this->assertNotNull($story->getTitle());
         $this->assertNotNull($story->getSlug());
         $this->assertNotNull($story->getStatus());
 
-        $this->assertNotNull($story->getPermalink());
+        $this->assertNotNull($story->getLink());
         $this->assertNotNull($story->getDescription());
         $this->assertNotNull($story->getThumbnail());
         $this->assertNotNull($story->getCreatedDate());

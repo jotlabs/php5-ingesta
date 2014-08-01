@@ -23,6 +23,12 @@ class Story
     }
 
 
+    public function getGuid()
+    {
+        return $this->getStoryId();
+    }
+
+
     public function getTitle()
     {
         return $this->story->title;
@@ -47,7 +53,7 @@ class Story
     }
 
 
-    public function getPermalink()
+    public function getLink()
     {
         return $this->story->permalink;
     }
