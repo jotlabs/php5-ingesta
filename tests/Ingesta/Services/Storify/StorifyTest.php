@@ -28,12 +28,14 @@ class StorifyTest extends PHPUnit_Framework_TestCase
     }
 
 
-    public function testGetUserStoryReturnsUserStory()
+    public function testGetUserStoryReturnsStory()
     {
         $story = $this->storify->getUserStory('unittest', 'teststory');
         $this->assertNotNull($story);
-        $this->assertNotNull($story->self);
-        $this->assertNotNull($story->content);
+        $this->assertTrue(is_a($story, 'Ingesta\Services\Storify\Wrappers\Story'));
+
+        //$this->assertNotNull($story->self);
+        //$this->assertNotNull($story->content);
     }
 
 
