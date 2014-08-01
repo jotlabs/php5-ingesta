@@ -1,11 +1,14 @@
 <?php
 namespace Ingesta\Services\Storify\Wrappers;
 
+use Ingesta\Services\Storify\Utils\Content;
+
 class Story
 {
     const STATUS_PUBLISHED = 'published';
 
     protected $story;
+    protected $content;
 
 
     public function __construct($story)
@@ -108,6 +111,9 @@ class Story
 
     public function getContent()
     {
-        return $this->story->content;
+        if (!$this->content) {
+            $this->content = Content::cleanStoryContent($this->story->content);
+        }
+        return $this->content;
     }
 }
