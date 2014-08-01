@@ -2,6 +2,7 @@
 namespace Ingesta\Services\Storify;
 
 use Ingesta\Services\ServiceBase;
+use Ingesta\Services\Storify\Wrappers\Story;
 
 class Storify extends ServiceBase
 {
@@ -44,6 +45,7 @@ class Storify extends ServiceBase
     **/
     public function getUserStory($username, $storySlug)
     {
+        $story  = null;
         $apiUrl = $this->expandUrlTemplate(
             self::URL_USER_STORY_ENDPOINT,
             array( 'username' => $username, 'slug' => $storySlug )
@@ -59,9 +61,11 @@ class Storify extends ServiceBase
             if ($content) {
                 $response->content = $content;
             }
+
+            $story = new Story($response);
         }
 
-        return $response;
+        return $story;
     }
 
 
