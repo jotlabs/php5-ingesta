@@ -55,7 +55,14 @@ class StorifyTest extends PHPUnit_Framework_TestCase
 
         $this->assertTrue($story->isPublished());
         $this->assertTrue(is_array($story->getTags()));
-        $this->assertTrue(count($story->getTags()) > 0);
+
+        $tags = $story->getTags();
+        $this->assertTrue(count($tags) > 0);
+
+        foreach ($tags as $tag) {
+            $this->assertTrue($tag[0] !== '#');
+        }
+
 
         $author = $story->getAuthor();
         $this->assertNotNull($author->slug);
