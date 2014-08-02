@@ -33,6 +33,7 @@ class Storify extends ServiceBase
 
         switch ($method) {
             case self::METHOD_GET_USER_STORIES:
+                $input = $this->getUserStories($inputArgs->username);
                 break;
         }
 
