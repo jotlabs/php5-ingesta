@@ -98,25 +98,25 @@ This will connect to Instagram's API and grab all media posts tagged with `mattd
 
 An example Storify recipe to get a user's recent stories looks like this:
 
-{
-    "input": {
-        "type":     "storify",
-        "method":   "getUserStories",
-        "username": "{username}"
-    },
-    "processing": {
-        "filter": [
-            "updatedSinceLastCheck"
-        ],
-        "format": [
-            "SimpleBlogFormat"
-        ]
-    },
-    "output": {
-        "type": "JsonFileWriter",
-        "file": "tmp/storify-{username}.json"
+    {
+        "input": {
+            "type":     "storify",
+            "method":   "getUserStories",
+            "username": "{username}"
+        },
+        "processing": {
+            "filter": [
+                "updatedSinceLastCheck"
+            ],
+            "format": [
+                "SimpleBlogFormat"
+            ]
+        },
+        "output": {
+            "type": "JsonFileWriter",
+            "file": "tmp/storify-{username}.json"
+        }
     }
-}
 
 Saving this to `share/recipes/storify-getUserStories.json` and running the recipe by:
 
