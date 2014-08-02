@@ -49,6 +49,7 @@ class Storify extends ServiceBase
         );
         echo "Requesting JSON: {$apiUrl}\n";
         $response = $this->getJson($apiUrl);
+        //return $response;
 
         if (!empty($response->code) && $response->code === self::RESPONSE_OK) {
             foreach ($response->content->stories as $storyDoc) {
