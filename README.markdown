@@ -94,3 +94,33 @@ After putting in your Instagram key and saving the file to `share/recipes/instag
 This will connect to Instagram's API and grab all media posts tagged with `mattdamon`, and outputs a simple JSON document to `/tmp/instagram-mattdamon.json`.
 
 
+### Storify recipe
+
+An example Storify recipe to get a user's recent stories looks like this:
+
+{
+    "input": {
+        "type":     "storify",
+        "method":   "getUserStories",
+        "username": "{username}"
+    },
+    "processing": {
+        "filter": [
+            "updatedSinceLastCheck"
+        ],
+        "format": [
+            "SimpleBlogFormat"
+        ]
+    },
+    "output": {
+        "type": "JsonFileWriter",
+        "file": "tmp/storify-{username}.json"
+    }
+}
+
+Saving this to `share/recipes/storify-getUserStories.json` and running the recipe by:
+
+    bin/ingesta --recipe=storify-getUserStories --username=isofarro
+
+This will connect to the Storify API and get my currently published Storify stories, outputting them to a JSON document in `tmp/storify-isofarro.json`.
+
