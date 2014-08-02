@@ -28,6 +28,19 @@ class StorifyTest extends PHPUnit_Framework_TestCase
     }
 
 
+    public function testGetUserStoriesReturnsStories()
+    {
+        $stories = $this->storify->getUserStories('unittest');
+        $this->assertNotNull($stories);
+        $this->assertTrue(is_array($stories));
+        $this->assertTrue(count($stories) > 0);
+
+        foreach ($stories as $story) {
+            $this->assertTrue(is_a($story, 'Ingesta\Services\Storify\Wrappers\Story'));
+        }
+    }
+
+
     public function testGetUserStoryReturnsStory()
     {
         $story = $this->storify->getUserStory('unittest', 'teststory');
@@ -76,6 +89,11 @@ class StorifyTest extends PHPUnit_Framework_TestCase
     protected function initMockHttpClient()
     {
         $httpClient = new MockHttp();
+
+        $httpClient->addUrlResponse(
+            'http://api.storify.com/v1/stories/unittest',
+            file_get_contents(STUB_DIR . '/service-responses/storify-get-user-stories.json')
+        );
 
         $httpClient->addUrlResponse(
             'http://api.storify.com/v1/stories/unittest/teststory',
