@@ -99,6 +99,12 @@ class Story
     }
 
 
+    public function getCategories()
+    {
+        return array();
+    }
+
+
     public function getAuthor()
     {
         $author = (object) array(
