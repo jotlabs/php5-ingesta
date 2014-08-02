@@ -40,6 +40,27 @@ class Storify extends ServiceBase
     }
 
 
+    public function getUserStories($username)
+    {
+        $stories = array();
+        $apiUrl = $this->expandUrlTemplate(
+            self::URL_USER_STORIES_ENDPOINT,
+            array('username' => $username)
+        );
+        echo "Requesting JSON: {$apiUrl}\n";
+        $response = $this->getJson($apiUrl);
+
+        if (!empty($response->code) && $response->code === self::RESPONSE_OK) {
+            foreach ($response->content->stories as $storyDoc) {
+                $story = new Story($storyDoc);
+                $stories[] = $story;
+            }
+        }
+
+        return $stories;
+    }
+
+
     /**
         getUserStory -- returns the Storify document representing a user's story
     **/
