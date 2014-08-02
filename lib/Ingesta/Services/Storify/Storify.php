@@ -52,6 +52,14 @@ class Storify extends ServiceBase
 
         if (!empty($response->code) && $response->code === self::RESPONSE_OK) {
             foreach ($response->content->stories as $storyDoc) {
+
+                // Get the embed content for each story
+                $storySlug = $storyDoc->slug;
+                $content = $this->getUserStoryEmbed($username, $storySlug);
+                if ($content) {
+                    $storyDoc->content = $content;
+                }
+
                 $story = new Story($storyDoc);
                 $stories[] = $story;
             }
