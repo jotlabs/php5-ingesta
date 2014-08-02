@@ -9,6 +9,7 @@ class Story
 
     protected $story;
     protected $content;
+    protected $tags;
 
 
     public function __construct($story)
@@ -91,7 +92,10 @@ class Story
 
     public function getTags()
     {
-        return $this->story->meta->hashtags;
+        if (empty($this->tags)) {
+            $this->processTags();
+        }
+        return $this->tags;
     }
 
 
@@ -121,5 +125,18 @@ class Story
             $this->content = Content::cleanStoryContent($this->story->content);
         }
         return $this->content;
+    }
+
+
+    protected function processTags()
+    {
+        $tags = array();
+
+        foreach ($this->story->meta->hashtags as $tag) {
+            $tag = substr($tag, 1);
+            $tags[] = $tag;
+        }
+
+        $this->tags = $tags;
     }
 }
