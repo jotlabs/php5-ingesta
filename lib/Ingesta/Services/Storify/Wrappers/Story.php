@@ -108,11 +108,12 @@ class Story
     public function getAuthor()
     {
         $author = (object) array(
-            'slug'     => $this->story->author->username,
-            'name'     => $this->story->author->name,
-            'bio'      => $this->story->author->bio,
-            'image'    => $this->story->author->avatar,
-            'location' => $this->story->author->location,
+            'username'  => $this->story->author->name,
+            'slug'      => $this->story->author->username,
+            'firstname' => $this->story->author->name,
+            'bio'       => $this->story->author->bio,
+            'image'     => $this->story->author->avatar,
+            'location'  => $this->story->author->location,
         );
 
         return $author;
