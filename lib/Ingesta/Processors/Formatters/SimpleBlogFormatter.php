@@ -42,10 +42,16 @@ class SimpleBlogFormatter implements Processor
             if (is_array($meta)) {
                 $blog = array_merge($blog, $meta);
             }
+
         } elseif (is_a($input, 'Ingesta\Services\Instagram\Wrappers\MediaResult')) {
             $blog['likeCount'] = $input->getLikeCount();
             $blog['author']    = $input->getAuthor();
             //$blog['tags']      = $input->getTags();
+
+        } elseif (is_a($input, 'Ingesta\Services\Storify\Wrappers\Story')) {
+            $blog['excerpt'] = $input->getDescription();
+            $blog['author']  = $input->getAuthor();
+
         }
 
         return (object) $blog;
