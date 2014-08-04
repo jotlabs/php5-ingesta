@@ -79,7 +79,7 @@ class StorifyTest extends PHPUnit_Framework_TestCase
 
         $author = $story->getAuthor();
         $this->assertNotNull($author->slug);
-        $this->assertNotNull($author->name);
+        $this->assertNotNull($author->username);
         $this->assertNotNull($author->bio);
         $this->assertNotNull($author->image);
         $this->assertNotNull($author->location);
