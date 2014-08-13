@@ -47,7 +47,13 @@ class Post
 
     public function getSlug()
     {
-        return $this->post->post_name;
+        $slug = $this->post->post_name;
+
+        // Filter out url-encoded non-alphanumeric characters
+        $slug = preg_replace('/\%\w{2}/', '', $slug);
+        $slug = preg_replace('/\W+/', '-', $slug);
+
+        return $slug;
     }
 
 
