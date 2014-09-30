@@ -25,6 +25,38 @@ class HttpBase implements Http
     }
 
 
+    public function post($url, $params)
+    {
+        $data = '';
+
+        if ($this->isHttpUrl($url)) {
+            $ch = curl_init();
+
+            $postBody = $this->urlEncodeParams($params);
+
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $postBody);
+
+            $data = curl_exec($ch);
+            curl_close($ch);
+
+        } else {
+            // No idea what this URL is.
+        }
+
+        return $data;
+    }
+
+
+    protected function urlEncodeParams($params)
+    {
+        $query = http_build_query($params);
+        return $query;
+    }
+
+
 
     protected function isHttpUrl($url)
     {
