@@ -13,16 +13,25 @@ class Storify extends ServiceBase
     const API_BASE_URL = 'http://api.storify.com/v1';
 
     # URL Templates
+    const URL_USER_AUTH_ENDPOINT    = 'https://api.storify.com/v1/auth';
     const URL_USER_STORIES_ENDPOINT = 'http://api.storify.com/v1/stories/{username}';
     const URL_USER_STORY_ENDPOINT   = 'http://api.storify.com/v1/stories/{username}/{slug}';
 
     # URL Templates -- HTML
     const URL_USER_STORY_EMBED      = 'http://storify.com/{username}/{slug}/embed';
 
+    private $apiKey = null;
+
 
     public function __construct($httpClient, $urlTemplate)
     {
         parent::__construct($httpClient, $urlTemplate);
+    }
+
+
+    public function setApiKey($apiKey)
+    {
+        $this->apiKey = $apiKey;
     }
 
 
@@ -41,7 +50,29 @@ class Storify extends ServiceBase
     }
 
 
-    public function getUserStories($username)
+    public function authenticateUser($username, $password)
+    {
+        $user = null;
+
+        $apiUrl = self::URL_USER_AUTH_ENDPOINT;
+        $params = array(
+            'username' => $username,
+            'password' => $password,
+            'api_key'  => $this->apiKey
+        );
+
+        $response = $this->postWithJsonResponse($apiUrl, $params);
+        //print_r($response);
+
+        if (!empty($response->code) && $response->code === self::RESPONSE_OK) {
+            $user = $response->content;
+        }
+
+        return $user->_token;
+    }
+
+
+    public function getUserStories($username, $userToken = null)
     {
         $stories = array();
         $apiUrl = $this->expandUrlTemplate(
