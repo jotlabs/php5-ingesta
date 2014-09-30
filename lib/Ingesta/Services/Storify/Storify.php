@@ -79,6 +79,16 @@ class Storify extends ServiceBase
             self::URL_USER_STORIES_ENDPOINT,
             array('username' => $username)
         );
+
+        # Quick URL hack
+        if ($userToken) {
+            $apiUrl .= '?' . http_build_query(array(
+                'api_key'  => $this->apiKey,
+                'username' => $username,
+                '_token'   => $userToken
+            ));
+        }
+
         echo "Requesting JSON: {$apiUrl}\n";
         $response = $this->getJson($apiUrl);
         //return $response;
