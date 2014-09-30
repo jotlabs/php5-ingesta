@@ -41,6 +41,13 @@ abstract class ServiceBase implements InputGetter
     }
 
 
+    protected function postWithJsonResponse($url, $params)
+    {
+        $response = $this->httpClient->post($url, $params);
+        $json     = json_decode($response);
+        return $json;
+    }
+
     protected function expandUrlTemplate($urlTemplate, $data)
     {
         return $this->urlTemplate->renderTemplate($urlTemplate, $data);
