@@ -75,6 +75,24 @@ class Post
     }
 
 
+    public function getThumbnail()
+    {
+        $thumbnail = '';
+
+        if (!empty($this->post->post_thumbnail->link)) {
+            $thumbnail = $this->post->post_thumbnail->link;
+
+        } else {
+            $content = $this->getContent();
+            if (preg_match("/src=\"([^\"]+)\"/", $content, $matches)) {
+                $thumbnail = $matches[1];
+            }
+        }
+
+        return $thumbnail;
+    }
+
+
     public function getLink()
     {
         return $this->post->link;
