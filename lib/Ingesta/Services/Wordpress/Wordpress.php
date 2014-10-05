@@ -64,7 +64,12 @@ class Wordpress implements InputGetter
                 array(
                     1,
                     $this->credentials->getUsername(),
-                    $this->credentials->getPassword()
+                    $this->credentials->getPassword(),
+                    array(
+                        //'post_type' => 'lom_video',
+                        //'post_status' => 'publish',
+                        'number' => 100
+                    )
                 )
             );
 
