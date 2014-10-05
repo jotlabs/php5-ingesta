@@ -179,10 +179,21 @@ class Post
         foreach ($this->post->terms as $term) {
             switch ($term['taxonomy']) {
                 case 'category':
+                    $term['primary'] = true;
+                    $this->categories[] = new Term($term);
+                    break;
+                case 'site_sections':
+                    if (strpos($term['slug'], 'in-') === 0) {
+                        $term['slug'] = substr($term['slug'], 3);
+                    }
                     $this->categories[] = new Term($term);
                     break;
                 case 'post_tag':
                     $this->tags[] = new Term($term);
+                    break;
+
+                default:
+                    $this->categories[] = new Term($term);
                     break;
             }
         }
