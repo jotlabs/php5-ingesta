@@ -14,11 +14,7 @@ class SimpleBlogFormatter implements Processor
         //echo __CLASS__ . ":\n";
         //print_r($input);
 
-        $thumbnail = '';
-        $content   = $input->getContent();
-        if (preg_match("/src=\"([^\"]+)\"/", $content, $matches)) {
-            $thumbnail = $matches[1];
-        }
+        $thumbnail = $input->getThumbnail();
 
         $blog = array(
             'guid'      => $input->getGuid(),
