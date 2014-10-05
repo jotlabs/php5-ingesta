@@ -174,9 +174,9 @@ class Storify extends ServiceBase
 
     public function getStoryEmbedByUrl($embedUrl)
     {
-        echo "Requesting HTML: $embedUrl\n";
+        echo "Requesting HTML: $embedUrl";
         $response = $this->getHTML($embedUrl);
-
+        echo "- RECV ", strlen($response), " bytes\n";
         return $response;
     }
 
