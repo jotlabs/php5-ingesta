@@ -128,7 +128,7 @@ class Story
 
     public function getContent()
     {
-        if (!$this->content) {
+        if (!$this->content and !empty($this->story->content)) {
             $this->content = Content::cleanStoryContent($this->story->content);
         }
         return $this->content;
