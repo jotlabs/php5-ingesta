@@ -79,9 +79,16 @@ class Post
     {
         $thumbnail = '';
 
-        if (!empty($this->post->post_thumbnail->link)) {
-            $thumbnail = $this->post->post_thumbnail->link;
 
+        if (!empty($this->post->post_thumbnail['link'])) {
+            $thumbnail = $this->post->post_thumbnail['link'];
+
+            if (!empty($this->post->post_thumbnail['metadata']['sizes']['post-thumbnail'])) {
+                $resizedImage = $this->post->post_thumbnail['metadata']['sizes']['post-thumbnail']['file'];
+
+                $lastSlash = strrpos($thumbnail, '/');
+                $thumbnail = substr($thumbnail, 0, $lastSlash + 1) . $resizedImage;
+            }
         } else {
             $content = $this->getContent();
             if (preg_match("/src=\"([^\"]+)\"/", $content, $matches)) {
