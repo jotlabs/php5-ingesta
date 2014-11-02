@@ -34,10 +34,11 @@ class Wordpress implements InputGetter
     {
         $input  = null;
         $method = $inputArgs->method;
+        $args   = !empty($inputArgs->args) ? (array)$inputArgs->args : array();
 
         switch ($method) {
             case self::METHOD_GET_POSTS:
-                $input = $this->getPosts();
+                $input = $this->getPosts($args);
                 break;
         }
 
@@ -54,7 +55,7 @@ class Wordpress implements InputGetter
     }
 
 
-    public function getPosts()
+    public function getPosts($args = null)
     {
         $posts = null;
 
@@ -65,11 +66,7 @@ class Wordpress implements InputGetter
                     1,
                     $this->credentials->getUsername(),
                     $this->credentials->getPassword(),
-                    array(
-                        //'post_type' => 'lom_video',
-                        //'post_status' => 'publish',
-                        'number' => 100
-                    )
+                    $args
                 )
             );
 
