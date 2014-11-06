@@ -37,6 +37,9 @@ class WordpressContentFormatter implements Processor
                     //print_r($matches);
                     $buffer[] = "<div class=\"media-caption\">{$matches[2]}</div>";
 
+                } elseif (preg_match("/^\[embed\]([^\]]*)\[\/embed\]$/", $line, $matches)) {
+                    $buffer[] = $this->convertEmbed($matches[1]);
+
                 } elseif (preg_match("/^\<\/?(\w+)\b/", $line, $match) && in_array($match[1], self::$blockEl)) {
                     // Do not wrap block level elements
                     $buffer[] = $line;
@@ -52,5 +55,40 @@ class WordpressContentFormatter implements Processor
 
         $output = implode("\n", $buffer);
         return $output;
+    }
+
+
+    protected function convertEmbed($body)
+    {
+        $markup = "[embed]{$body}[/embed]";
+        if (strpos($body, 'http') === 0) {
+
+            if (strpos($body, 'youtube.com/') < 15 && preg_match('/\bv=([^&]+)/', $body, $matches)) {
+                $videoId = $matches[1];
+                //echo "Youtube clip: {$videoId}\n";
+                $markup = $this->createYoutubeFigure($videoId);
+
+            } else {
+                echo "[-WARN-] Don't recognise embedded content: {$body}\n";
+            }
+
+        }
+
+        return $markup;
+    }
+
+
+    protected function createYoutubeFigure($videoId)
+    {
+        $markup = <<<HTML
+<figure class="video">
+    <span class="container">
+        <iframe width="560" height="315" src="//www.youtube.com/embed/{$videoId}"
+            frameborder="0" allowfullscreen></iframe>
+    </span>
+</figure>
+HTML;
+
+        return $markup;
     }
 }
