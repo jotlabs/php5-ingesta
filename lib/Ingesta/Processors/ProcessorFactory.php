@@ -75,6 +75,7 @@ class ProcessorFactory
 
     protected function getFilter($filterName, $state)
     {
+        $filter = null;
         switch ($filterName) {
             case self::FILTER_UPDATED_SINCE_LAST_CHECK:
                 $dateFilter = new DateFilter();
