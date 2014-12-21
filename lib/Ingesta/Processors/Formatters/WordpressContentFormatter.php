@@ -42,11 +42,24 @@ class WordpressContentFormatter implements Processor
                     $buffer[] = "<div class=\"media-caption\">{$line}</div>";
 
                 } elseif (preg_match("/^\[embed\]([^\]]*)\[\/embed\]$/", $line, $matches)) {
+                    // echo "Embed:";
+                    // print_r($matches);
                     $buffer[] = $this->convertEmbed($matches[1]);
 
                 } elseif (preg_match("/^\<\/?(\w+)\b/", $line, $match) && in_array($match[1], self::$blockEl)) {
                     // Do not wrap block level elements
                     $buffer[] = $line;
+
+                } elseif (preg_match("/^\<iframe src=\"([^\"]+)\"/", $line, $matches)) {
+                    // echo "Iframe:";
+                    // print_r($matches);
+
+                    if (strpos($matches[1], 'youtube.com') !== false) {
+                        $videoId = substr($matches[1], strrpos($matches[1], '/') + 1);
+                        $buffer[] = $this->convertEmbed($videoId);
+                    } else {
+                        $buffer[] = "<p>{$line}</p>";
+                    }
 
                 } elseif (preg_match('/\S+/', $line)) {
                     $buffer[] = "<p>{$line}</p>";
@@ -76,6 +89,8 @@ class WordpressContentFormatter implements Processor
                 echo "[-WARN-] Don't recognise embedded content: {$body}\n";
             }
 
+        } else {
+            $markup = $this->createYoutubeFigure($body);
         }
 
         return $markup;
