@@ -33,10 +33,15 @@ class SimpleBlogFormatter implements Processor
         # TODO: refactor into a Service-specific implementation of an interface
         if (is_a($input, 'Ingesta\Services\Wordpress\Wrappers\Post')) {
             $blog['author'] = $input->getAuthor()->data();
-            $meta = $this->getYoastData($input);
 
+            $meta = $this->getYoastData($input);
             if (is_array($meta)) {
                 $blog = array_merge($blog, $meta);
+            }
+
+            $video = $this->getVideoMetaData($input);
+            if (!empty($video)) {
+                $blog['video'] = $video;
             }
 
         } elseif (is_a($input, 'Ingesta\Services\Instagram\Wrappers\MediaResult')) {
@@ -98,5 +103,24 @@ class SimpleBlogFormatter implements Processor
         }
 
         return $meta;
+    }
+
+    protected function getVideoMetaData($input)
+    {
+        $customFields = $input->getCustomFields();
+        $videoMeta = array();
+
+        foreach ($customFields as $fieldKey => $value) {
+
+            if ($fieldKey === 'social_score') {
+                $videoMeta['socialScore'] = $value;
+
+            } elseif (strpos($fieldKey, 'video_') === 0) {
+                $fieldKey = substr($fieldKey, 6);
+                $videoMeta[$fieldKey] = $value;
+            }
+        }
+
+        return $videoMeta;
     }
 }
