@@ -13,6 +13,14 @@ class WordpressContentFormatter implements Processor
         'tfoot', 'ul', 'video'
     );
 
+    public $embed = null;
+
+
+    public function setEmbed($embed)
+    {
+        $this->embed = $embed;
+    }
+
 
     public function process($input)
     {
@@ -46,6 +54,10 @@ class WordpressContentFormatter implements Processor
                     // print_r($matches);
                     $buffer[] = $this->convertEmbed($matches[1]);
 
+                } elseif (preg_match("/^https?:\/\/\S+$/", $line) && $this->isEmbedUrl($line)) {
+                    //echo "Naked Embed URL: {$line}\n";
+                    $buffer[] = $this->embedUrl($line);
+
                 } elseif (preg_match("/^\<\/?(\w+)\b/", $line, $match) && in_array($match[1], self::$blockEl)) {
                     // Do not wrap block level elements
                     $buffer[] = $line;
@@ -72,6 +84,18 @@ class WordpressContentFormatter implements Processor
 
         $output = implode("\n", $buffer);
         return $output;
+    }
+
+
+    protected function isEmbedUrl($url)
+    {
+        return $this->embed->isEmbedUrl($url);
+    }
+
+
+    protected function embedUrl($url)
+    {
+        return $this->embed->embedUrl($url);
     }
 
 
