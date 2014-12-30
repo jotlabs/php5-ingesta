@@ -31,6 +31,14 @@ class Instagram implements InputGetter
     }
 
 
+    public function getMediaByWebUrl($mediaUrl)
+    {
+        $shortcode = $this->getMediaShortcodeFromUrl($mediaUrl);
+        $media = $this->getMediaByShortcode($shortcode);
+        return $media;
+    }
+
+
     public function getInput($inputArgs)
     {
         $input  = null;

@@ -66,6 +66,31 @@ class InstagramTest extends PHPUnit_Framework_TestCase
     }
 
 
+    public function testGetItemData()
+    {
+        $itemUrl = 'http://instagram.com/p/tQt9joJaX0/?modal=true';
+
+        $itemData = $this->client->getMediaByWebUrl($itemUrl);
+        $this->assertNotNull($itemData);
+
+        //print_r($itemData);
+
+        $this->assertNotNull($itemData->link);
+        $this->assertNotNull($itemData->id);
+
+        $this->assertNotNull($itemData->caption);
+        $this->assertNotNull($itemData->caption->text);
+
+        $this->assertNotNull($itemData->user->username);
+        $this->assertNotNull($itemData->user->profile_picture);
+        $this->assertNotNull($itemData->user->full_name);
+
+        $this->assertNotNull($itemData->images->standard_resolution->url);
+        $this->assertEquals(640, $itemData->images->standard_resolution->width);
+        $this->assertEquals(640, $itemData->images->standard_resolution->height);
+    }
+
+
     protected function createMockHttpClient()
     {
         $httpClient = new MockHttp();
