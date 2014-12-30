@@ -6,6 +6,7 @@ use Ingesta\Processors\Filters\DraftFilter;
 use Ingesta\Processors\Adapters\MethodCallAdapter;
 use Ingesta\Processors\Formatters\SimpleBlogFormatter;
 use Ingesta\Processors\Formatters\WordpressContentFormatter;
+use Ingesta\Processors\Formatters\EmbedFormatter;
 
 class ProcessorFactory
 {
@@ -58,8 +59,13 @@ class ProcessorFactory
                 $processingRules->format = array($processingRules->format);
             }
 
+            $embeds = null;
+            if (!empty($processingRules->embeds)) {
+                $embeds = $processingRules->embeds;
+            }
+
             foreach ($processingRules->format as $format) {
-                $formatter = $this->getFormatter($format, $state);
+                $formatter = $this->getFormatter($format, $embeds, $state);
                 if ($formatter) {
                     echo "[-INFO-] Adding formatter '{$format}'\n";
                     $processor->addFormatter($formatter);
@@ -96,7 +102,7 @@ class ProcessorFactory
     }
 
 
-    protected function getFormatter($formatName, $state)
+    protected function getFormatter($formatName, $embeds, $state)
     {
         $formatter = null;
         switch ($formatName) {
@@ -105,6 +111,8 @@ class ProcessorFactory
                 break;
             case self::FORMAT_WORDPRESS_CONTENT:
                 $formatter = new WordpressContentFormatter();
+                $embed = new EmbedFormatter($embeds);
+                $formatter->setEmbed($embed);
                 break;
         }
 
