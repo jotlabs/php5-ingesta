@@ -57,6 +57,14 @@ class InstagramTest extends PHPUnit_Framework_TestCase
     }
 
 
+    public function testGetMediaShortcodeFromUrl()
+    {
+        $itemUrl = 'http://instagram.com/p/tQt9joJaX0/?modal=true';
+        $itemId = $this->client->getMediaShortcodeFromUrl($itemUrl);
+        $this->assertEquals('tQt9joJaX0', $itemId);
+    }
+
+
     protected function createMockHttpClient()
     {
         $httpClient = new MockHttp();

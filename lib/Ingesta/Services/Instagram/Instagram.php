@@ -95,4 +95,24 @@ class Instagram implements InputGetter
 
         return $this->urlTemplate->renderTemplate($urlTemplate, $data);
     }
+
+
+    public function getMediaShortcodeFromUrl($mediaUrl)
+    {
+        /*
+            URL Patterns:
+            shortlink: http://instagram.com/p/tQt9joJaX0/?modal=true
+        */
+
+        $shortcode = '';
+        $url = parse_url($mediaUrl);
+
+        if ($url['host'] === 'instagram.com') {
+            $pathString = trim($url['path'], '/');
+            $path = explode('/', $pathString);
+            $shortcode = $path[1];
+        }
+
+        return $shortcode;
+    }
 }
