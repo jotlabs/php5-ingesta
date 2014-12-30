@@ -10,6 +10,7 @@ class Instagram implements InputGetter
     const MEDIA_BY_SHORTCODE_ENDPOINT = 'https://api.instagram.com/v1/media/shortcode/{shortcode}?client_id={clientId}';
     const RECENT_TAG_ENDPOINT = 'https://api.instagram.com/v1/tags/{tag}/media/recent?client_id={clientId}';
 
+    const METHOD_GET_MEDIA_BY_URL = 'getMediaByWebUrl';
     const METHOD_GET_MEDIA_BY_SHORTCODE = 'getMediaByShortcode';
     const METHOD_GET_RECENT_TAGS = 'getTagRecent';
 
@@ -31,14 +32,6 @@ class Instagram implements InputGetter
     }
 
 
-    public function getMediaByWebUrl($mediaUrl)
-    {
-        $shortcode = $this->getMediaShortcodeFromUrl($mediaUrl);
-        $media = $this->getMediaByShortcode($shortcode);
-        return $media;
-    }
-
-
     public function getInput($inputArgs)
     {
         $input  = null;
@@ -48,9 +41,23 @@ class Instagram implements InputGetter
             case self::METHOD_GET_RECENT_TAGS:
                 $input = $this->getRecentByTag($inputArgs->tag);
                 break;
+            case self::METHOD_GET_MEDIA_BY_URL:
+                $input = $this->getMediaByWebUrl($inputArgs->url);
+                break;
+            case self::METHOD_GET_MEDIA_BY_SHORTCODE:
+                $input = $this->getMediaByShortcode($inputArgs->shortcode);
+                break;
         }
 
         return $input;
+    }
+
+
+    public function getMediaByWebUrl($mediaUrl)
+    {
+        $shortcode = $this->getMediaShortcodeFromUrl($mediaUrl);
+        $media = $this->getMediaByShortcode($shortcode);
+        return $media;
     }
 
 
