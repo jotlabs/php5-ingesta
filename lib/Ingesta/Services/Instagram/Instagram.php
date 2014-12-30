@@ -6,8 +6,11 @@ use Ingesta\Services\Instagram\Wrappers\PaginatedResults;
 
 class Instagram implements InputGetter
 {
+    const MEDIA_BY_ID_ENDPOINT = 'https://api.instagram.com/v1/media/{mediaId}?client_id={clientId}';
+    const MEDIA_BY_SHORTCODE_ENDPOINT = 'https://api.instagram.com/v1/media/shortcode/{shortcode}?client_id={clientId}';
     const RECENT_TAG_ENDPOINT = 'https://api.instagram.com/v1/tags/{tag}/media/recent?client_id={clientId}';
 
+    const METHOD_GET_MEDIA_BY_SHORTCODE = 'getMediaByShortcode';
     const METHOD_GET_RECENT_TAGS = 'getTagRecent';
 
     protected $httpClient;
@@ -40,6 +43,23 @@ class Instagram implements InputGetter
         }
 
         return $input;
+    }
+
+
+    public function getMediaByShortcode($shortcode)
+    {
+        $url = $this->expandUrlTemplate(
+            self::MEDIA_BY_SHORTCODE_ENDPOINT,
+            array(
+                'shortcode' => $shortcode,
+                'clientId'  => $this->apiClientId
+            )
+        );
+
+        echo "[-INFO-] Instagram getMediaByShortcode {$shortcode}: {$url}\n";
+        $response = $this->getJson($url);
+
+        return $response->data;
     }
 
 

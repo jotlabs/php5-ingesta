@@ -8,6 +8,7 @@ use Ingesta\Utils\UrlTemplate;
 class InstagramTest extends PHPUnit_Framework_TestCase
 {
     const RECENT_TAG_DOC = '/service-responses/instagram-recent-tag.json';
+    const MEDIA_RESPONSE_DOC = '/service-responses/instagram-media-response.json';
     const MOCK_CLIENT_ID = 'INSTAGRAM_CLIENT_ID';
     protected $client;
 
@@ -69,12 +70,17 @@ class InstagramTest extends PHPUnit_Framework_TestCase
     {
         $httpClient = new MockHttp();
 
-        $jsonDoc = file_get_contents(STUB_DIR . self::RECENT_TAG_DOC);
+        $recentTagsDoc = file_get_contents(STUB_DIR . self::RECENT_TAG_DOC);
         $httpClient->addUrlResponse(
             'https://api.instagram.com/v1/tags/mattdamon/media/recent?client_id=' . self::MOCK_CLIENT_ID,
-            $jsonDoc
+            $recentTagsDoc
         );
 
+        $mediaResponseDoc = file_get_contents(STUB_DIR . self::MEDIA_RESPONSE_DOC);
+        $httpClient->addUrlResponse(
+            'https://api.instagram.com/v1/media/shortcode/tQt9joJaX0?client_id=' . self::MOCK_CLIENT_ID,
+            $mediaResponseDoc
+        );
         return $httpClient;
     }
 }
