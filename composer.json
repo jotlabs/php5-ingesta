@@ -24,7 +24,8 @@
     "require": {
         "php": ">=5.3.0",
         "mikecao/flight": "v1.1",
-        "zendframework/zend-xmlrpc": "2.2.6.*"
+        "zendframework/zend-xmlrpc": "2.2.6.*",
+        "facebook/php-sdk" : "3.2.3"
     },
     "autoload": {
         "psr-0": {
