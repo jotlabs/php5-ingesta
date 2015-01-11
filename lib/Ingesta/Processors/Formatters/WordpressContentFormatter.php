@@ -43,11 +43,14 @@ class WordpressContentFormatter implements Processor
             if ($line) {
                 if (preg_match("/^\[caption ([^\]]+)\](.*)\[\/caption\]$/", $line, $matches)) {
                     //print_r($matches);
-                    $buffer[] = "<div class=\"media-caption\">{$matches[2]}</div>";
+                    $content = $matches[2];
+                    $content = preg_replace("/\s*height=\"\d+\"/", "", $content);
+                    $buffer[] = "<div class=\"media-caption\">{$content}</div>";
 
                 } elseif (preg_match("/^\<img\s([^\>]+)\s\/\>$/", $line, $matches)) {
                     # A simple image
-                    $buffer[] = "<div class=\"media-caption\">{$line}</div>";
+                    $content = preg_replace("/\s*height=\"\d+\"/", "", $line);
+                    $buffer[] = "<div class=\"media-caption\">{$content}</div>";
 
                 } elseif (preg_match("/^\[embed\]([^\]]*)\[\/embed\]$/", $line, $matches)) {
                     // echo "Embed:";
