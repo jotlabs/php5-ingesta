@@ -61,6 +61,10 @@ class WordpressContentFormatter implements Processor
                     //echo "Naked Embed URL: {$line}\n";
                     $buffer[] = $this->embedUrl($line);
 
+                } elseif (preg_match("/^\<h3\>(.+)\<\/h3\>$/", $line, $matches)) {
+                    // Change h3 into h2.
+                    $buffer[] = "<h2>{$matches[1]}</h2>";
+
                 } elseif (preg_match("/^\<\/?(\w+)\b/", $line, $match) && in_array($match[1], self::$blockEl)) {
                     // Do not wrap block level elements
                     $buffer[] = $line;
