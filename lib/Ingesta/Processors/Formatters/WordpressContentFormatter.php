@@ -36,6 +36,7 @@ class WordpressContentFormatter implements Processor
     {
         $buffer = array();
         $lines  = explode("\n", $content);
+        $has_h2 = false;
 
         foreach ($lines as $line) {
             $line = trim($line);
@@ -65,9 +66,13 @@ class WordpressContentFormatter implements Processor
                     // Change h3 into h2.
                     $buffer[] = "<h2>{$matches[1]}</h2>";
 
-                } elseif (preg_match("/^\<\/?(\w+)\b/", $line, $match) && in_array($match[1], self::$blockEl)) {
+                } elseif (!$has_h2 && preg_match("/^\<\/?(\w+)\b/", $line, $match) && in_array($match[1], self::$blockEl)) {
                     // Do not wrap block level elements
                     $buffer[] = $line;
+
+                    if (preg_match("/^\<h2\b/", $line)) {
+                        $has_h2 = true;
+                    }
 
                 } elseif (preg_match("/^\<iframe src=\"([^\"]+)\"/", $line, $matches)) {
                     // echo "Iframe:";
