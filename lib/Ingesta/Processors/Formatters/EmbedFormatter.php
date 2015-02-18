@@ -58,8 +58,8 @@ class EmbedFormatter
             $data = $instagram->getMediaByWebUrl($url);
             //echo "Instagram media data: ";
             //print_r($data);
-
-            $output = <<<HTML
+            if ($data) {
+                $output = <<<HTML
 <div class="embed instagram">
     <div class="hd"></div>
     <div class="bd">
@@ -83,7 +83,7 @@ class EmbedFormatter
     </div>
 </div>
 HTML;
-
+            }
         }
 
         return $output;
