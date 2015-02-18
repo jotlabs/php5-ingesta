@@ -29,6 +29,8 @@ class EmbedFormatter
 
         if (strpos($url, 'instagram.com')) {
             $isEmbedUrl = true;
+        } elseif (strpos($url, 'open.spotify.com')) {
+            $isEmbedUrl = true;
         }
 
         return $isEmbedUrl;
@@ -40,6 +42,8 @@ class EmbedFormatter
         $output = '';
         if (strpos($url, 'instagram.com')) {
             $output = $this->getInstagramEmbed($url);
+        } elseif (strpos($url, 'open.spotify.com')) {
+            $output = $this->getSpotifyEmbed($url);
         }
 
         return $output;
@@ -95,5 +99,39 @@ HTML;
         }
 
         return $this->clients['instagram'];
+    }
+
+
+    public function getSpotifyEmbed($url)
+    {
+        $output = $url;
+        $embedUrl = $this->getSpotifyEmbedUrl($url);
+
+        if ($embedUrl) {
+
+            $output = <<<HTML
+<div class="embed spotify">
+    <iframe src="{$embedUrl}" width="640" height="720" frameborder="0" allowTransparency="true"></iframe>
+</div>
+HTML;
+        }
+
+        return $output;
+    }
+
+
+    protected function getSpotifyEmbedUrl($url)
+    {
+        $embedUrl = null;
+        $spotifyRe = "/https?:\/\/open\.spotify\.com\/(track|album|user\/.+?\/playlist)\/([a-z0-9]{22})\/?/i";
+        if (preg_match($spotifyRe, $url, $matches)) {
+            $type = str_replace('/', ':', $matches[1]);
+            $id = $matches[2];
+
+            $spotifyUri = "spotify:{$type}:{$id}";
+            $embedUrl = "https://embed.spotify.com/?uri={$spotifyUri}";
+        }
+
+        return $embedUrl;
     }
 }
