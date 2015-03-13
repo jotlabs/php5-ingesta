@@ -145,7 +145,7 @@ class Instagram implements InputGetter
         if ($url['host'] === 'instagram.com') {
             $pathString = trim($url['path'], '/');
             $path = explode('/', $pathString);
-            $shortcode = $path[1];
+            $shortcode = end($path);
         }
 
         return $shortcode;
