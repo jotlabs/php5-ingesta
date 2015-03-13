@@ -68,7 +68,6 @@ class EmbedFormatter
             width="{$data->images->standard_resolution->width}"
             height="{$data->images->standard_resolution->height}"
             alt=""></a>
-        <p>{$data->caption->text}</p>
     </div>
     <div class="ft">
         <div class="user-profile">
