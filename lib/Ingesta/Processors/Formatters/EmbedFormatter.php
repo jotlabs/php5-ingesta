@@ -56,9 +56,30 @@ class EmbedFormatter
         $instagram = $this->getInstagramClient();
         if (!empty($instagram)) {
             $data = $instagram->getMediaByWebUrl($url);
-            //echo "Instagram media data: ";
-            //print_r($data);
+            // echo "Instagram media data: ";
+            // print_r($data);
             if ($data) {
+                if (!empty($data->videos)) {
+                    echo "[VIDEO]\n";
+                    $payload = <<<HTML
+<video height="{$data->videos->standard_resolution->height}"
+    width="{$data->videos->standard_resolution->width}"
+    controls
+    >
+    <source src="{$data->videos->standard_resolution->url}" type="video/mp4">
+</video>
+HTML;
+                } else {
+                    $payload = <<<HTML
+<a href="{$data->link}"><img
+    src="{$data->images->standard_resolution->url}"
+    width="{$data->images->standard_resolution->width}"
+    height="{$data->images->standard_resolution->height}"
+    alt=""></a>
+HTML;
+                }
+
+
                 $output = <<<HTML
 <div class="embed instagram">
     <div class="hd">
@@ -70,11 +91,7 @@ class EmbedFormatter
         </div>
     </div>
     <div class="bd">
-        <a href="{$data->link}"><img
-            src="{$data->images->standard_resolution->url}"
-            width="{$data->images->standard_resolution->width}"
-            height="{$data->images->standard_resolution->height}"
-            alt=""></a>
+        {$payload}
     </div>
     <div class="ft">
         <div class="source">
