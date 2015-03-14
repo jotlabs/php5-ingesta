@@ -61,7 +61,14 @@ class EmbedFormatter
             if ($data) {
                 $output = <<<HTML
 <div class="embed instagram">
-    <div class="hd"></div>
+    <div class="hd">
+        <div class="user-profile">
+            <a href="https://instagram.com/{$data->user->username}/">
+                <img src="{$data->user->profile_picture}" alt="">
+                {$data->user->username}
+            </a>
+        </div>
+    </div>
     <div class="bd">
         <a href="{$data->link}"><img
             src="{$data->images->standard_resolution->url}"
@@ -70,12 +77,6 @@ class EmbedFormatter
             alt=""></a>
     </div>
     <div class="ft">
-        <div class="user-profile">
-            <a href="https://instagram.com/{$data->user->username}/">
-                <img src="{$data->user->profile_picture}" alt="">
-                {$data->user->username}
-            </a>
-        </div>
         <div class="source">
             <a href="http://instagram.com/" class="from-instagram">Instagram</a>
         </div>
