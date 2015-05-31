@@ -71,8 +71,13 @@ class Instagram implements InputGetter
             )
         );
 
-        echo "[-INFO-] Instagram getMediaByShortcode {$shortcode}: {$url}\n";
+        echo "[-INFO-] Instagram getMediaByShortcode {$shortcode}\n";
         $response = $this->getJson($url);
+
+        if (empty($response)) {
+            echo "[-WARN-] Instagram getMediaByShortcode {$shortcode} empty\n";
+            print_r($response);
+        }
 
         return $response->data;
     }
