@@ -44,6 +44,11 @@ class SimpleBlogFormatter implements Processor
                 $blog['video'] = $video;
             }
 
+            $googleMapUrl = $this->getGoogleMapUrl($input);
+            if ($googleMapUrl) {
+                $blog['googleMapUrl'] = $googleMapUrl;
+            }
+
         } elseif (is_a($input, 'Ingesta\Services\Instagram\Wrappers\MediaResult')) {
             $blog['likeCount'] = $input->getLikeCount();
             $blog['author']    = $input->getAuthor();
@@ -87,6 +92,20 @@ class SimpleBlogFormatter implements Processor
         }
 
         return $terms;
+    }
+
+
+    protected function getGoogleMapUrl($input)
+    {
+        $mapUrl = null;
+        $customFields = $input->getCustomFields();
+        //print_r($customFields);
+
+        if (!empty($customFields['google_map_url'])) {
+            $mapUrl = $customFields['google_map_url'];
+        }
+
+        return $mapUrl;
     }
 
 
